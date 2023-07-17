@@ -1,0 +1,24 @@
+{
+  "name": "trainyourmemory",
+  "version": "1.0.0",
+  "description": "See how well you remember where you went and what you had to drink",
+  "main": "index.js",
+  "scripts": {
+    "server": "nodemon index.js"
+  },
+  "dependencies": {
+    "dotenv": "^16.3.1",
+    "express": "^4.18.2"
+  },
+  "devDependencies": {
+    "chalk": "^2.4.2",
+    "eslint": "^8.45.0",
+    "eslint-config-standard": "^17.1.0",
+    "eslint-plugin-import": "^2.27.5",
+    "eslint-plugin-n": "^16.0.1",
+    "eslint-plugin-promise": "^6.1.1",
+    "nodemon": "^3.0.1"
+  },
+  "author": "Group X",
+  "license": "MIT"
+}

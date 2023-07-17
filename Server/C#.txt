@@ -1,0 +1,2 @@
+Do the C# tings in this folder, ensure you add the necessary filters the .gitignore so we don't suffer like in the C# level-up
+I believe you can do that in VS, generate a gitignore using the git interface, just don't overwrite the current, just append
