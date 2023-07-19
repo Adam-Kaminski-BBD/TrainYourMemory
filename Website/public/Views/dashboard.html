@@ -1,13 +1,30 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard</title>
-    <script src="./dashboard.js"></script>
+  <title>Dashboard</title>
+  <link rel="stylesheet" type="text/css" href="../css/dashboard.css">
 </head>
 <body>
-    <h1>What are you dopping?</h1>
-    <p>This is the homepage, showcasing dashboard of information</p>
+  <section class="dashboard">
+    <div id="navbarContainer"></div>
+    </div>
+    <div class="content">
+      <div class="message-container">
+        <h1 id="h1">Hey John, what did you have this time?</h1>
+        <h2 id="h2">Where have you been dopping?</h2>
+      </div>
+      <div class="card-container">
+        <div id="top-drink" class="card">Top Drink</div>
+        <div id="top-bar" class="card">Top Bar</div>
+        <div id="spending" class="card">Spending</div>
+        <div id="daily-quiz" class="card">Daily Quiz</div>
+        <div id="history" class="card">History</div>
+      </div>
+
+    </div>
+  </section>
+
+  <script src="../JS/dashboard.js" type="module"></script>
+
 </body>
 </html>
