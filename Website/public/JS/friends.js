@@ -1,43 +1,22 @@
-import renderNavbar  from './navbar.js';
+import * as Fn from './navbar.js';
 
-function showFriends() {
-  window.location.href='../Views/friends.html';
-}
-function showLocations() {
-  console.log("Showing friends...");
-}
-function showDrinks() {
-  window.location.href='../Views/drinks.html';
-}
-function showHistory() {
-  window.location.href='../Views/history.html';
-}
-function showEntry() {
-  console.log("Showing friends...");
-}
-function showFaQ() {
-  console.log("Showing friends...");
-}
-function showHome() {
-  window.location.href='../Views/dashboard.html';
-}
-
-const navbarElement = renderNavbar(
+const navbarElement = Fn.renderNavbar(
   '../Images/image1.png',
   "John's Training",
-  [
-    { label: 'Home', onclick: showHome },
-    { label: 'Friends', onclick: showFriends, active: true },
-    { label: 'Locations', onclick: showLocations },
-    { label: 'Drinks', onclick: showDrinks },
-    { label: 'History', onclick: showHistory },
-    { label: 'New Entry', onclick: showEntry },
-    { label: 'FaQ', onclick: showFaQ }
+  [{ label: 'Home', onclick: Fn.showHome },
+    { label: 'Friends', onclick: Fn.showFriends, active: true },
+    { label: 'Locations', onclick: Fn.showLocations },
+    { label: 'Drinks', onclick: Fn.showDrinks },
+    { label: 'History', onclick: Fn.showHistory },
+    { label: 'New Entry', onclick: Fn.showEntry },
+    { label: 'FaQ', onclick: Fn.showFaQ }
   ]
 );
 
 const navbarContainer = document.getElementById('navbarContainer');
 navbarContainer.appendChild(navbarElement);
+
+
 document.addEventListener('DOMContentLoaded',()=>{
   isVerified();
   populateHistory();

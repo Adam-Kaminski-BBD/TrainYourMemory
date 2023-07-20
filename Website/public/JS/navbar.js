@@ -1,4 +1,6 @@
-function renderNavbar(logoSrc, name, tabs) {
+
+
+export function renderNavbar(logoSrc, name, tabs) {
   const navbarElement = document.createElement('div');
   navbarElement.className = 'nav-bar';
 
@@ -32,5 +34,26 @@ function renderNavbar(logoSrc, name, tabs) {
 
   return navbarElement;
 }
+export  function showFriends() {
+  window.location.href='../Views/friends.html';
+}
+export function showLocations() {
+  console.log("Showing friends...");
+}
+export function showDrinks() {
+  window.location.href='../Views/drinks.html';
+}
+export function showHistory() {
+  window.location.href='../Views/history.html';
+}
+export  function showEntry() {
+  console.log("Showing friends...");
+}
+export function showFaQ() {
+  console.log("Showing friends...");
+}
+export function showHome() {
+  window.location.href='../Views/dashboard.html';
+}
 
-export default renderNavbar;
+
