@@ -30,3 +30,93 @@ nav{
   background-color: var(--main_blue);
   width: 100%;
 }
+
+form{
+  width: 90%;
+  height: 100%;
+  
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr 1fr;
+  gap: 30px;
+  
+  margin: auto;
+
+  padding: 1rem;
+  box-sizing: border-box;
+}
+
+form > section{
+  width: 100%;
+  height: 100%;
+  border-radius: var(--border_radius);
+  box-shadow: 10px 10px 40px #bebebe,
+  -10px -10px 40px #ffffff;
+}
+
+label, input{
+  display: block;
+  margin: auto;
+  font-size: 2rem;
+}
+
+input, textarea, button{
+  border-radius: var(--border_radius);
+  border: 3px solid var(--main_blue);
+  background-color: var(--bg_blue);
+}
+
+#drinkEntry{
+  display: grid;
+  grid-template-rows: 1fr 1fr 1fr 1fr;
+  text-align: center;
+} 
+
+#drinkEntry label, #drinkEntry input{
+  margin: 0 auto 0 auto;
+  width: 80%;
+  text-align: center;
+}
+
+#drinkEntry label, #locationEntry label{
+  align-self: end;
+}
+
+#drinkEntry input{
+  height: 2.2rem;
+}
+
+#locationEntry{
+  display: grid;
+  grid-template-rows: 1fr 3fr;
+  text-align: center;
+}
+
+#locationEntry label, #locationEntry textarea{
+  margin: 0 auto 0 auto;
+  width: 100%;
+}
+
+#locationEntry textarea{
+  height: 70%;
+  width: 80%;
+  resize: none;
+  font-size: 1.5rem;
+}
+
+img{
+  width: 50%;
+  margin: auto;
+}
+
+section:last-of-type{
+  box-shadow: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+section button{
+  width: 80%;
+  height: 4em;
+}

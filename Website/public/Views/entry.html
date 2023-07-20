@@ -5,20 +5,20 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Add Dop</title>
     <link rel="stylesheet" href="../Styles/entry_ss.css">
-    <script src="./entry.js"></script>
+    <script src="../JS/entry.js"></script>
 </head>
 <body>
     <nav>Thabangs menu</nav>
     <main>
         <!-- Override default -->
         <form>
-            <section>
+            <section id="drinkEntry">
                 <label for="drink">Drink</label>
                 <input type="text" name="drink" maxlength="50" required>
                 <label for="cost">Cost</label>
                 <input type="number" name="cost" max="10000" required>
             </section>
-            <section>
+            <section id="locationEntry">
                 <label for="location">Location</label>
                 <textarea name="location" cols="30" rows="10"  required></textarea>
             </section>
