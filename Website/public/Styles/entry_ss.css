@@ -1,0 +1,32 @@
+:root{
+  --main_blue: #3C4AC6;
+  --bg_blue: #3c4ac62e;
+  --border_radius: 10px;
+}
+
+*{
+  padding: 0;
+  margin: 0;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+html{
+  width: 100%;
+  height: 100%;
+}
+body{
+  width: 100%;
+  height: 100%;
+  display: grid;
+  grid-template-columns: 1fr 3fr;
+}
+
+main{
+  text-align: center;
+  overflow-y: auto;
+}
+
+nav{
+  background-color: var(--main_blue);
+  width: 100%;
+}

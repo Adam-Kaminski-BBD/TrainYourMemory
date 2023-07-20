@@ -4,10 +4,27 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Add Dop</title>
+    <link rel="stylesheet" href="../Styles/entry_ss.css">
     <script src="./entry.js"></script>
 </head>
 <body>
-    <h1>What did you have to drink tonight?</h1>
-    <p>This is where a user can add a new drink to their restaurant/bar</p>
+    <nav>Thabangs menu</nav>
+    <main>
+        <!-- Override default -->
+        <form>
+            <section>
+                <label for="drink">Drink</label>
+                <input type="text" name="drink" maxlength="50" required>
+                <label for="cost">Cost</label>
+                <input type="number" name="cost" max="10000" required>
+            </section>
+            <section>
+                <label for="location">Location</label>
+                <textarea name="location" cols="30" rows="10"  required></textarea>
+            </section>
+            <img src="../Images/bar-counter.png" alt="bar counter">
+            <section><button type="submit">Add Entry</button></section>
+        </form>
+    </main>
 </body>
 </html>
