@@ -38,7 +38,7 @@ export  function showFriends() {
   window.location.href='../Views/friends.html';
 }
 export function showLocations() {
-  console.log("Showing friends...");
+  window.location.href='../Views/locations.html';
 }
 export function showDrinks() {
   window.location.href='../Views/drinks.html';
