@@ -39,6 +39,14 @@ CREATE TABLE [dbo].[Log] (
     CONSTRAINT [FK_Log_Locations] FOREIGN KEY ([LocationId]) REFERENCES [dbo].[Locations] ([Id]),
     CONSTRAINT [FK_Log_Drinks] FOREIGN KEY ([DrinkId]) REFERENCES [dbo].[Drinks] ([Id])
 );
+CREATE TABLE [dbo].[Friends]
+(
+	[Id] INT NOT NULL PRIMARY KEY, 
+    [UserId] INT NOT NULL, 
+    [FriendId] INT NOT NULL, 
+    CONSTRAINT [FK_User] FOREIGN KEY ([UserId]) REFERENCES [dbo].[Users]([Id]),
+    CONSTRAINT [FK_Friend] FOREIGN KEY ([FriendId]) REFERENCES [dbo].[Users]([Id])
+);
 
 CREATE PROCEDURE [dbo].[InsertUser]
 	@Email varchar(max),
