@@ -8,6 +8,7 @@
   padding: 0;
   margin: 0;
   font-family: Arial, Helvetica, sans-serif;
+  box-sizing: border-box;
 }
 
 html{
@@ -21,15 +22,11 @@ body{
   grid-template-columns: .8fr 3fr;
 }
 
-nav{
-  background-color: var(--main_blue);
-  width: 100%;
-}
-
 main{
   text-align: center;
   overflow-y: auto;
 }
+
 h1{
   position:fixed;
   width: 69%;
@@ -62,88 +59,4 @@ table td, table th{
 
 tbody tr:nth-of-type(2n-1){
   background-color: var(--bg_blue);
-}
-
-/*nav-bar styling*/
-.dashboard {
-  display: flex;
-  padding: 15px;
-  justify-content: center;
-  background-color:#d9dcf3 ;
-}
-
-.nav-bar {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: 25px;
-  border-radius: 25px;
-  background-color: #3C4AC6;
-  box-shadow: 0px 0px 20px 0px #1F265E;
-}
-
-.table-container {
-  display: none;
-}
-
-.h1{
-  display: none;
-}
-
-.logo {
-  width: 100px;
-  height: 100px;
-}
-
-.name {
-  margin-top: 10px;
-}
-
-.tabs {
-  display: flex;
-  flex-direction: column;
-}
-
-h4{
-  text-align: center;
-}
-
-.tabs button {
-  margin-bottom: 10px;
-  color: black;
-  border-radius: 25px;
-  border: none;
-  background-color: #242D7D;
-  padding: 10px;
-  font-size: large;
-  height: 50px;
-  width: 165px;
-}
-
-.content {
-  padding: 40px;
-  border-radius: 25px;
-  margin: 0 0 0 12px;
-}
-
-.message-container {
-  margin-bottom: 20px;
-}
-
-.card-container {
-  display: flex;
-  flex-wrap: wrap;
-  font-size: x-large;
-}
-
-.card {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 350px;
-  height: 150px;
-  background-color: #3C4AC6;
-  margin: 10px;
-  padding: 10px;
-  border-radius: 25px;
 }

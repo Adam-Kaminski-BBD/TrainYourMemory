@@ -8,6 +8,7 @@
   padding: 0;
   margin: 0;
   font-family: Arial, Helvetica, sans-serif;
+  box-sizing: border-box;
 }
 
 html{
@@ -24,11 +25,6 @@ body{
 main{
   text-align: center;
   overflow-y: auto;
-}
-
-nav{
-  background-color: var(--main_blue);
-  width: 100%;
 }
 
 form{
@@ -104,7 +100,7 @@ input, textarea, button{
   font-size: 1.5rem;
 }
 
-img{
+main img{
   width: 50%;
   margin: auto;
 }
