@@ -18,17 +18,12 @@ body{
   width: 100%;
   height: 100%;
   display: grid;
-  grid-template-columns: 1fr 3fr;
+  grid-template-columns: .8fr 3fr;
 }
 
 main{
   text-align: center;
   overflow-y: auto;
-}
-
-nav{
-  background-color: var(--main_blue);
-  width: 100%;
 }
 
 h1{
