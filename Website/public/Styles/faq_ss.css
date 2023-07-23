@@ -47,8 +47,8 @@ ul li{
   font-size: 1.5rem;
   width: 90%;
   margin: auto;
-  box-shadow: 10px 10px 40px #bebebe,
-  -10px -10px 40px #ffffff;
+  box-shadow: 10px 10px 25px #bebebe,
+  -10px -10px 25px #ffffff;
   padding: 2rem 0 2rem 0;
   border-radius: var(--border_radius);
   margin-bottom: 2rem;
