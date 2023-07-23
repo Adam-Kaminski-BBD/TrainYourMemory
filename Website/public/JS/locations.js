@@ -16,7 +16,6 @@ const navbarElement = Fn.renderNavbar(
 const navbarContainer = document.getElementById('navbarContainer');
 navbarContainer.appendChild(navbarElement);
 
-
 document.addEventListener('DOMContentLoaded',()=>{
   isVerified();
   populateHistory();
@@ -27,36 +26,78 @@ function isVerified(){
 }
 
 function populateHistory(){
+  // request to api
+  //Test data
   const response = [
     {
-      'Name': 'Johny Walker',
-      'Location': 'The Venue',
-      'Favourite Drink': 'Vodka Lime',
-      'Favourite Bar': 'Shakers'
+      'Date': '21 July 2023',
+      'Location': 'Venue A',
     },
     {
-      'Name': 'Jack Sparrow',
-      'Location': 'The Venue',
-      'Favourite Drink': 'Vodka Lime',
-      'Favourite Bar': 'Tigers Milk'
+      'Date': '15 August 2023',
+      'Location': 'Venue B',
     },
     {
-      'Name': 'Jamie Jameson',
-      'Location': 'The Venue',
-      'Favourite Drink': 'Vodka Lime',
-      'Favourite Bar': 'The Rooftop'
+      'Date': '2 September 2023',
+      'Location': 'Venue C',
     },
     {
-      'Name': 'Paul Klipdrift',
-      'Location': 'The Venue',
-      'Favourite Drink': 'Vodka Lime',
-      'Favourite Bar': 'Club Sheba'
+      'Date': '10 October 2023',
+      'Location': 'Venue D',
+    },
+    {
+      'Date': '5 November 2023',
+      'Location': 'Venue E',
+    },
+    {
+      'Date': '19 December 2023',
+      'Location': 'Venue F',
+    },
+    {
+      'Date': '8 January 2024',
+      'Location': 'Venue G',
+    },
+    {
+      'Date': '14 February 2024',
+      'Location': 'Venue H',
+    },
+    {
+      'Date': '22 March 2024',
+      'Location': 'Venue I',
+    },
+    {
+      'Date': '30 April 2024',
+      'Location': 'Venue J',
+    },
+    {
+      'Date': '17 May 2024',
+      'Location': 'Venue K',
+    },
+    {
+      'Date': '6 June 2024',
+      'Location': 'Venue L',
+    },
+    {
+      'Date': '25 July 2024',
+      'Location': 'Venue M',
+    },
+    {
+      'Date': '3 August 2024',
+      'Location': 'Venue N',
+    },
+    {
+      'Date': '12 September 2024',
+      'Location': 'Venue O',
     },
   ];
+  
+ 
+  
 
   const tbody = document.getElementsByTagName('tbody')[0];
 
   for(let i = 0; i < response.length; i++){
+    // create tr and td for each key in the object
     const tr = document.createElement('tr');
     const keys = Object.keys(response[i]);
     keys.forEach(key=>{

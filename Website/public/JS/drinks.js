@@ -3,7 +3,8 @@ import * as Fn from './navbar.js';
 const navbarElement = Fn.renderNavbar(
   '../Images/image1.png',
   "John's Training",
-  [{ label: 'Home', onclick: Fn.showHome },
+  [
+    { label: 'Home', onclick: Fn.showHome },
     { label: 'Friends', onclick: Fn.showFriends, active: true },
     { label: 'Locations', onclick: Fn.showLocations },
     { label: 'Drinks', onclick: Fn.showDrinks },
@@ -27,30 +28,28 @@ function isVerified(){
 }
 
 function populateHistory(){
+  // request to api
+  //Test data
   const response = [
     {
-      'Name': 'Johny Walker',
-      'Location': 'The Venue',
-      'Favourite Drink': 'Vodka Lime',
-      'Favourite Bar': 'Shakers'
+      'Date': '14 July 2023',
+      'Drink': 'Vodka Lime',
+      'Cost': 'R45'
     },
     {
-      'Name': 'Jack Sparrow',
-      'Location': 'The Venue',
-      'Favourite Drink': 'Vodka Lime',
-      'Favourite Bar': 'Tigers Milk'
+      'Date': '14 July 2023',
+      'Drink': 'Vodka Lime',
+      'Cost': 'R45'
     },
     {
-      'Name': 'Jamie Jameson',
-      'Location': 'The Venue',
-      'Favourite Drink': 'Vodka Lime',
-      'Favourite Bar': 'The Rooftop'
+      'Date': '14 July 2023',
+      'Drink': 'Vodka Lime',
+      'Cost': 'R45'
     },
     {
-      'Name': 'Paul Klipdrift',
-      'Location': 'The Venue',
-      'Favourite Drink': 'Vodka Lime',
-      'Favourite Bar': 'Club Sheba'
+      'Date': '14 July 2023',
+      'Drink': 'Vodka Lime',
+      'Cost': 'R45'
     },
   ];
 
