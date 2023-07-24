@@ -1,12 +1,13 @@
 import * as Fn from './navbar.js';
 
-const name = "Thabang"; 
+// const name = "Thabang"; 
 
-const navbarElement = Fn.renderNavbar(
-  `${name}'s Training`);
+// const navbarElement = Fn.renderNavbar(
+//   `${name}'s Training`);
 
-const navbarContainer = document.getElementById('navbarContainer');
-navbarContainer.appendChild(navbarElement);
+// const navbarContainer = document.getElementById('navbarContainer');
+// navbarContainer.appendChild(navbarElement);
+
 document.addEventListener('DOMContentLoaded',()=>{
   isVerified();
   populateHistory();

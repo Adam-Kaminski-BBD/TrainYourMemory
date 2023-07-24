@@ -1,5 +1,4 @@
-
-const logoSrc = '../Images/image1.png';
+const logoSrc = './icon.png';
 const tabs = [
   {
     label: 'Home',
@@ -70,25 +69,25 @@ export function renderNavbar(name) {
 // Have to be temporary as we will route based on /friends /locations etc. as validation will be done on server
 
 export  function showFriends() {
-  window.location.href = '../Views/friends.html';
+  window.location.href = '/friends';
 }
 export function showLocations() {
-  window.location.href = '../Views/locations.html';
+  window.location.href = '/locations';
 }
 export function showDrinks() {
-  window.location.href = '../Views/drinks.html';
+  window.location.href = '/drinks';
 }
 export function showHistory() {
-  window.location.href = '../Views/history.html';
+  window.location.href = '/history';
 }
 export  function showEntry() {
-  window.location.href = '../Views/entry.html';
+  window.location.href = '/entry';
 }
 export function showFaQ() {
-  window.location.href = '../Views/FAQ.html';
+  window.location.href = '/FAQ';
 }
 export function showHome() {
-  window.location.href = '../Views/dashboard.html';
+  window.location.href = '/dashboard';
 }
 
 

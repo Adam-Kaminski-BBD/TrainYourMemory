@@ -31,14 +31,34 @@ app.get('/dashboard', (req, res)=>{
   res.sendFile(path.join(dir, './dashboard.html'));
 });
 
+app.get('/friends', (req, res)=>{
+  // list of the homies
+  res.sendFile(path.join(dir, './friends.html'));
+});
+
+app.get('/locations', (req, res)=>{
+  // list of the homies
+  res.sendFile(path.join(dir, './locations.html'));
+});
+
+app.get('/drinks', (req, res)=>{
+  // list of the homies
+  res.sendFile(path.join(dir, './drinks.html'));
+});
+
+app.get('/history', (req, res)=>{
+  // list of the homies
+  res.sendFile(path.join(dir, './history.html'));
+});
+
 app.get('/entry', (req, res)=>{
   // Enter drink etc.
   res.sendFile(path.join(dir, './entry.html'));
 });
 
-app.get('/friends', (req, res)=>{
+app.get('/FAQ', (req, res)=>{
   // list of the homies
-  res.sendFile(path.join(dir, './friends.html'));
+  res.sendFile(path.join(dir, './FAQ.html'));
 });
 
 app.listen(process.env.PORT, ()=>{
