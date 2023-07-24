@@ -1,5 +1,14 @@
 import * as Fn from './navbar.js';
 
+const name = "Thabang"; 
+
+const navbarElement = Fn.renderNavbar(
+  `${name}'s Training`);
+
+const navbarContainer = document.getElementById('navbarContainer');
+navbarContainer.appendChild(navbarElement);
+
+
 document.addEventListener('DOMContentLoaded',()=>{
   isVerified();
   populateHistory();
@@ -19,6 +28,32 @@ function isVerified(){
 
 function populateHistory(){
   // request to api
+
+  // Endpoint URL
+const apiUrl = 'https://api.zippopotam.us/us/33162';
+
+// Make the API request using fetch
+fetch(apiUrl)
+  .then(response => {
+    // Check if the request was successful (status code 200)
+    if (!response.ok) {
+      throw new Error(`Request failed with status ${response.status}`);
+    }
+    // Parse the response as JSON
+    return response.json();
+  })
+  .then(data => {
+    // Process and use the data as needed
+    console.log(data.places);
+    // Example: Display city and state information
+    console.log('City:', data.places[0]['place name']);
+    console.log('State:', data.places[0]['state']);
+  })
+  .catch(error => {
+    // Handle any errors that occurred during the fetch
+    console.error('Error:', error);
+  });
+
   //Test data
   const response = [
     {

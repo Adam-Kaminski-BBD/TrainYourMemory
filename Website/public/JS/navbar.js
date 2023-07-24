@@ -1,6 +1,5 @@
 
 const logoSrc = '../Images/image1.png';
-const name = 'John\'s Training'; //only thing that changes per user
 const tabs = [
   {
     label: 'Home',
@@ -34,7 +33,7 @@ const tabs = [
 ];
 
 
-export function renderNavbar() {
+export function renderNavbar(name) {
   const navbarElement = document.createElement('div');
   navbarElement.className = 'nav-bar';
   
