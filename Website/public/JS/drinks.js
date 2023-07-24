@@ -1,18 +1,9 @@
 import * as Fn from './navbar.js';
 
+const name = "Thabang"; 
+
 const navbarElement = Fn.renderNavbar(
-  '../Images/image1.png',
-  "John's Training",
-  [
-    { label: 'Home', onclick: Fn.showHome },
-    { label: 'Friends', onclick: Fn.showFriends, active: true },
-    { label: 'Locations', onclick: Fn.showLocations },
-    { label: 'Drinks', onclick: Fn.showDrinks },
-    { label: 'History', onclick: Fn.showHistory },
-    { label: 'New Entry', onclick: Fn.showEntry },
-    { label: 'FaQ', onclick: Fn.showFaQ }
-  ]
-);
+  `${name}'s Training`);
 
 const navbarContainer = document.getElementById('navbarContainer');
 navbarContainer.appendChild(navbarElement);
@@ -29,6 +20,32 @@ function isVerified(){
 
 function populateHistory(){
   // request to api
+
+  // Endpoint URL
+const apiUrl = 'https://api.zippopotam.us/us/33162';
+
+// Make the API request using fetch
+fetch(apiUrl)
+  .then(response => {
+    // Check if the request was successful (status code 200)
+    if (!response.ok) {
+      throw new Error(`Request failed with status ${response.status}`);
+    }
+    // Parse the response as JSON
+    return response.json();
+  })
+  .then(data => {
+    // Process and use the data as needed
+    console.log(data.places);
+    // Example: Display city and state information
+    console.log('City:', data.places[0]['place name']);
+    console.log('State:', data.places[0]['state']);
+  })
+  .catch(error => {
+    // Handle any errors that occurred during the fetch
+    console.error('Error:', error);
+  });
+
   //Test data
   const response = [
     {

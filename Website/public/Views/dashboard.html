@@ -2,23 +2,37 @@
 <html>
 <head>
   <title>Dashboard</title>
-  <link rel="stylesheet" type="text/css" href="../css/dashboard.css">
+  <link rel="stylesheet" type="text/css" href="../Styles/dashboard.css">
 </head>
 <body>
   <main class="dashboard">
-    <section id="navbarContainer">
-    </section>
+    <section id="navbarContainer"></section>
     <section class="content">
       <div class="message-container">
-        <h1 id="h1">Hey John, what did you have this time?</h1>
+        <h1 id="h1"></h1>
         <h2 id="h2">Where have you been dopping?</h2>
       </div>
       <section class="card-container">
-        <card id="top-drink" class="card">Top Drink</card>
-        <card id="top-bar" class="card">Top Bar</card>
-        <card id="spending" class="card">Spending</card>
-        <card id="daily-quiz" class="card">Daily Quiz</card>
-        <card id="history" class="card">History</card>
+        <card id="top-drink" class="card">
+          <p>Top Drink:</p><p id="drink"></p>
+        </card>
+        <card id="top-bar" class="card">
+          <p>Top Bar:</p><p id="bar"></p>
+        </card>
+        <card id="daily-quiz" class="card">
+          <p>Daily Quiz:</p>
+          <a href="../Views/quiz.html"> Click here to play</a>
+        </card>
+        <card id="history" class="card">
+          <p>History:</p>
+          <label id="location1"></label>
+          <label id="location2"></label>
+          <label id="location3"></label>
+          <label id="location4"></label>
+        </card>
+        <card id="spending" class="card">
+          <p>Spending:</p><p id="spend"></p>
+        </card>
       </section>
 
     </section>
