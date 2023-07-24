@@ -2,6 +2,7 @@ const express = require('express');
 const fs = require('fs');
 const path = require('path');
 const { log } = require('./Tools/Logger');
+const proxy = require('./proxy');
 require('dotenv').config();
 
 const app = express();
@@ -16,13 +17,17 @@ fs.readdirSync('./public', {
     app.use(express.static( path.join(__dirname, 'public', folder.name)));
   });
 
+// proxy routing for api
+app.use('/api', proxy);
+
+// Basic web routing
 app.get('/', (req, res)=>{
-  // Possible check for existing token? Then redirect to dashboard if expired
   res.sendFile(path.join(dir, './login.html'));
 });
 
+// All other screens require middleware validation, and this token can be used for validation on API
 app.get('/dashboard', (req, res)=>{
-  // if(validated)
+  // home page
   res.sendFile(path.join(dir, './dashboard.html'));
 });
 
