@@ -2,22 +2,30 @@
 {
     public class Log
     {
-
-        public string Location { get; set; }    
-        public string Drink { get; set; }   
-        public double Cost { get; set; }    
+        public int Id { get; set; }
+        public DateTime Date { get; set; }
         public int Quantity { get; set; }
-        public string Username { get; set; }
-        public DateTime Date { get; set; }  
+        public double Cost { get; set; }
 
-        public Log(string location, string drink, double cost, int quantity, string username, DateTime date)
+        public int UserId { get; set; }
+        public User User { get; set; }
+        public int LocationId { get; set; }
+        public Location Location { get; set; }
+        public int DrinkId { get; set; }   
+        public Drink Drink { get; set; }
+
+        public Log(int id, DateTime date, int quantity, double cost, int userId, User user, int locationId, Location location, int drinkId, Drink drink)
         {
-            Location = location;
-            Drink = drink;
-            Cost = cost;
-            Quantity = quantity;
-            Username = username;
+            Id = id;
             Date = date;
+            Quantity = quantity;
+            Cost = cost;
+            UserId = userId;
+            User = user;
+            LocationId = locationId;
+            Location = location;
+            DrinkId = drinkId;
+            Drink = drink;
         }
     }
 }

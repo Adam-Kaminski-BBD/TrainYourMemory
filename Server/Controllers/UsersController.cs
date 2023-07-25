@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Server.Models;
+using Server.Repositories;
 
 namespace Server.Controllers
 {
@@ -7,11 +8,19 @@ namespace Server.Controllers
     [Route("[controller]")]
     public class UsersController : Controller
     {
-        [HttpGet("{userId}")]
-        public IActionResult GetUserById(int userId)
+
+        private readonly UserRepository _userRepository;
+
+        public UsersController(UserRepository userRepository) 
         {
-            User User = new User(1, "Daniel@gmail.com", "daniel");
-            return new JsonResult(User);
+            _userRepository = userRepository;
+        }
+
+
+        [HttpGet("{userId}")]
+        public User? GetUserById(int userId)
+        {
+            return _userRepository.GetUserById(userId);
         }
 
         [HttpPost]
@@ -27,10 +36,10 @@ namespace Server.Controllers
         }
 
         [HttpGet("{userId}/friends")]
-        public IActionResult GetFriends(int userId)
+        public IEnumerable<User> GetFriends(int userId)
         {
             User User = new User(1, "Daniel@gmail.com", "daniel");
-            return new JsonResult(new List<User>() { User });
+            return new List<User>() { User };
         }
 
         [HttpPost("{userId}/friends/{friendId}")]
@@ -38,6 +47,19 @@ namespace Server.Controllers
         {
             return new EmptyResult();
         }
+
+        [HttpGet("{userId}/logs")]
+        public IActionResult GetUserLogs(int userId)
+        {
+            return new EmptyResult();
+        }
+
+        [HttpPost("{userId}/logs")]
+        public IActionResult LogDrinks(int userId, LogEntry log)
+        {
+            return new EmptyResult();
+        }
+
 
     }
 }
