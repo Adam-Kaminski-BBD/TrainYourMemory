@@ -10,7 +10,7 @@ namespace Server.Controllers
         [HttpGet]
         public IActionResult GetAllLocations()
         {
-            IEnumerable<Location> locations = new List<Location>() { new Location("The Venue"), new Location("Scottish Ale House") };
+            IEnumerable<Location> locations = new List<Location>() { new Location("The Venue", 1), new Location("Scottish Ale House", 2) };
             return new JsonResult(locations);
         }
 

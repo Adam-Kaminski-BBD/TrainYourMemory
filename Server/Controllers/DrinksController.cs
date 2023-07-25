@@ -11,7 +11,7 @@ namespace Server.Controllers
         [HttpGet]
         public IActionResult GetAllDrinks()
         {
-            IEnumerable<Drink> drinks = new List<Drink>() { new Drink("Jack", "Whisky", 40.0) };
+            IEnumerable<Drink> drinks = new List<Drink>() { new Drink("Jack", "Whisky", 40.0, 1) };
             return new JsonResult(drinks);
         }
 

@@ -26,6 +26,18 @@ namespace Server.Controllers
             return new JsonResult(user);
         }
 
+        [HttpGet("{userId}/friends")]
+        public IActionResult GetFriends(int userId)
+        {
+            User User = new User(1, "Daniel@gmail.com", "daniel");
+            return new JsonResult(new List<User>() { User });
+        }
+
+        [HttpPost("{userId}/friends/{friendId}")]
+        public IActionResult PostFriend(int userId, int friendId)
+        {
+            return new EmptyResult();
+        }
 
     }
 }
