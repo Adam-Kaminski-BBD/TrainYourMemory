@@ -58,6 +58,13 @@ route.post('/user', urlencodedParser, async (req, res)=>{
 });
 
 route.get('/drinks', urlencodedParser, async (req, res)=>{
+  const dummy = [
+    'Vodka Lime',
+    'Redbull Vodka',
+    'Water',
+    'Orange Juice',
+    'Champagne'
+  ];
   try {
     const outcome = await fetch(`${url}/drinks`);
     if(outcome.ok){
@@ -68,7 +75,8 @@ route.get('/drinks', urlencodedParser, async (req, res)=>{
     }
 
   } catch (error) {
-    res.status(400).send('Invalid request');
+    res.status(200).json(dummy);
+    // res.status(400).send('Invalid request');
   }
 });
 
@@ -89,6 +97,13 @@ route.get('/drink/top/:user', urlencodedParser, async (req, res)=>{
 });
 
 route.get('/locations', urlencodedParser, async (req, res)=>{
+  const dummy = [
+    '1 Discovery Place',
+    'The Yellowbrick road',
+    'Mom house',
+    'Bro house',
+    'Her house'
+  ];
   try {
     // C# API
     const outcome = await fetch(`${url}/locations`);
@@ -100,7 +115,8 @@ route.get('/locations', urlencodedParser, async (req, res)=>{
     }
 
   } catch (error) {
-    res.status(400).send('Invalid request');
+    res.send(dummy);
+    // res.status(400).send('Invalid request');
   }
 });
 
@@ -172,14 +188,14 @@ route.get('/history/:user', urlencodedParser, async (req, res)=>{
     // C# API
     const outcome = await fetch(`${url}/location/${user}`);
     
-    //for testing
-    res.status(200).send(dummy);
-    // if(outcome.ok){
-    //   const history = await outcome.json();
-    //   res.status(200).json(history);
-    // }else{
-    //   throw outcome;
-    // }
+    if(outcome.ok){
+      const history = await outcome.json();
+      res.status(200).json(history);
+    }else{
+      res.status(200).send(dummy);
+      // Doing because it will be invalid until actual call
+      // throw outcome;
+    }
 
   } catch (error) {
     res.status(400).send('Invalid request');

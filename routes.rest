@@ -21,3 +21,6 @@ GET http://localhost:8080/api/drink/top/"john@doe.com"
 
 ### history
 GET http://localhost:8080/api/history/john@doe.com
+
+### drinks
+GET http://localhost:8080/api/drinks
