@@ -31,6 +31,9 @@ h4{
   margin: auto;
   text-align: center;
 }
+h5{
+  margin-bottom: 12px;
+}
 
 .tabs button {
   margin-bottom: 12px;

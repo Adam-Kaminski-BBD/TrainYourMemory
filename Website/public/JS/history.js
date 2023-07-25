@@ -1,12 +1,6 @@
 import * as Fn from './navbar.js';
 
-// const name = "Thabang"; 
-
-// const navbarElement = Fn.renderNavbar(
-//   `${name}'s Training`);
-
-// const navbarContainer = document.getElementById('navbarContainer');
-// navbarContainer.appendChild(navbarElement);
+ 
 
 document.addEventListener('DOMContentLoaded',()=>{
   isVerified();

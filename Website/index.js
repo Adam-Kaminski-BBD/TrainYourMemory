@@ -3,10 +3,15 @@ const fs = require('fs');
 const path = require('path');
 const { log } = require('./Tools/Logger');
 const proxy = require('./proxy');
+const cors = require('cors');
 require('dotenv').config();
 
 const app = express();
 // Basic website server setup
+
+// Enable CORS for all routes
+app.use(cors());
+
 const dir = path.join(__dirname, './public/views');
 // Static files
 fs.readdirSync('./public', {

@@ -2,6 +2,7 @@ import * as Fn from './navbar.js';
 
 document.addEventListener('DOMContentLoaded',()=>{
   menuSetup();
+  populate();
 });
 
 function menuSetup(){
@@ -13,35 +14,29 @@ function menuSetup(){
 
 //Use the above document.addEventListener to call functions like the menuSetup to populate the screen, cleans things up
 
-const name = "Thabang"; 
-const topDrink = 'SkullCrusher';
-const topBAr = 'The Midnight';
-const spending =900;
+function populate(){
+  const topDrink = 'SkullCrusher';
+  const topBAr = 'The Midnight';
+  const spending = 900;
+  const name = 'Thabang';
+  
+  const greeting = document.getElementById('h1');
+  greeting.textContent = `Hey ${name}, what did you have this time?`;
 
+  const drink = document.getElementById('drink');
+  drink.textContent = topDrink;
 
+  const bar = document.getElementById('bar');
+  bar.textContent = topBAr;
 
-const navbarElement = Fn.renderNavbar(
-  `${name}'s Training`);
+  const spend = document.getElementById('spend');
+  spend.textContent =  `R${spending}`;
 
-const navbarContainer = document.getElementById('navbarContainer');
-navbarContainer.appendChild(navbarElement);
-
-const greeting = document.getElementById('h1');
-greeting.textContent = `Hey ${name}, what did you have this time?`;
-
-const drink = document.getElementById('drink');
-drink.textContent = topDrink;
-
-const bar = document.getElementById('bar');
-bar.textContent = topBAr;
-
-const spend = document.getElementById('spend');
-spend.textContent =  `R${spending}`;
-
-const locations = ["The Gabe", "Tiger's", "Emerald", "CheekyT"];
-locations.map((location, index) => {
-  const element = document.getElementById(`location${index + 1}`);
-  if (element) {
-    element.textContent = location;
-  }
-});
+  const locations = ['The Gabe', 'Tiger\'s', 'Emerald', 'CheekyT'];
+  locations.map((location, index) => {
+    const element = document.getElementById(`location${index + 1}`);
+    if (element) {
+      element.textContent = location;
+    }
+  });
+}

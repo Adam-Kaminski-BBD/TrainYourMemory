@@ -32,7 +32,8 @@ const tabs = [
 ];
 
 
-export function renderNavbar(name) {
+export function renderNavbar() {
+  const name = 'Thabang';
   const navbarElement = document.createElement('div');
   navbarElement.className = 'nav-bar';
   
@@ -41,9 +42,9 @@ export function renderNavbar(name) {
   logoImg.src = logoSrc;
   logoImg.alt = 'Logo';
 
-  const nameHeading = document.createElement('h4');
+  const nameHeading = document.createElement('h5');
   nameHeading.className = 'name';
-  nameHeading.textContent = name;
+  nameHeading.textContent = `${name}'s Training`;
 
   const tabsDiv = document.createElement('div');
   tabsDiv.className = 'tabs';
