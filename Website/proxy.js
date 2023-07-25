@@ -1,45 +1,158 @@
 const express = require('express');
+const bodyParser = require('body-parser');
+const fetch = (...args) => import('node-fetch').then(({ default: fetch }) => fetch(...args));
 const route = express.Router();
 
-// Evaluate REST Level
-route.post('/entry', (req, res)=>{
-  
+// Parse JSON data
+route.use(bodyParser.json());
+
+// Parse URL-encoded data
+route.use(bodyParser.urlencoded({ extended: true }));
+
+// C# API server
+const url = 'http://localhost:8080';
+let data = {
+  method: 'POST',
+  headers: {
+    'Content-Type': 'application/json',
+  },
+};
+
+let urlencodedParser = bodyParser.urlencoded({ extended: false });
+
+route.post('/entry', urlencodedParser, async (req, res)=>{
+  try {
+    const entry = req.body;
+    data['body'] = entry;
+
+    // C# API
+    const outcome = await fetch(`${url}/entry`, data);
+    if(outcome.ok){
+      res.status(200).send('All good!');
+    }else{
+      throw outcome;
+    }
+
+  } catch (error) {
+    res.status(400).send('Invalid request');
+  }
+
 });
 
-route.post('/user', (req, res)=>{
-  
+route.post('/user', urlencodedParser, async (req, res)=>{
+  try {
+    const entry = req.body;
+    data['body'] = entry;
+
+    // C# API
+    const outcome = await fetch(`${url}/user`, data);
+    if(outcome.ok){
+      res.status(200).send('All good!');
+    }else{
+      throw outcome;
+    }
+
+  } catch (error) {
+    res.status(400).send('Invalid request');
+  }
 });
 
-route.post('/drinks:user', (req, res)=>{
-  
+route.get('/drinks', urlencodedParser, async (req, res)=>{
+  try {
+    const outcome = await fetch(`${url}/drinks`);
+    if(outcome.ok){
+      const drinks = await outcome.json();
+      res.status(200).json(drinks);
+    }else{
+      throw outcome;
+    }
+
+  } catch (error) {
+    res.status(400).send('Invalid request');
+  }
 });
 
-route.get('/drink/top:user', (req, res)=>{
+route.get('/drink/top/:user', urlencodedParser, async (req, res)=>{
+  try {
+    const user = req.params.user;
+    // C# API
+    const outcome = await fetch(`${url}/entry/${user}`);
+    if(outcome.ok){
+      res.status(200).send('All good!');
+    }else{
+      throw outcome;
+    }
 
+  } catch (error) {
+    res.status(400).send('Invalid request');
+  }
 });
 
-route.post('/locations:user', (req, res)=>{
-  
+route.get('/locations', urlencodedParser, async (req, res)=>{
+  try {
+    // C# API
+    const outcome = await fetch(`${url}/locations`);
+    if(outcome.ok){
+      const locations = await outcome.json();
+      res.status(200).json(locations);
+    }else{
+      throw outcome;
+    }
+
+  } catch (error) {
+    res.status(400).send('Invalid request');
+  }
 });
 
-route.post('/location/top:user', (req, res)=>{
-  
+route.get('/location/top/:user', urlencodedParser, async (req, res)=>{
+  try {
+    const user = req.params.user;
+    // C# API
+    const outcome = await fetch(`${url}/location/${user}`);
+    if(outcome.ok){
+      const location = await outcome.json();
+      res.status(200).json(location);
+    }else{
+      throw outcome;
+    }
+
+  } catch (error) {
+    res.status(400).send('Invalid request');
+  }
 });
 
-route.post('/spend:user', (req, res)=>{
-  
+route.get('/spend/:user', urlencodedParser, async (req, res)=>{
+  try {
+    const user = req.params.user;
+    // C# API
+    const outcome = await fetch(`${url}/spend/${user}`);
+    if(outcome.ok){
+      const spend = await outcome.json();
+      res.status(200).json(spend);
+    }else{
+      throw outcome;
+    }
+
+  } catch (error) {
+    res.status(400).send('Invalid request');
+  }
 });
 
-route.post('/history:user', (req, res)=>{
-  
-});
+route.get('/history/:user', urlencodedParser, async (req, res)=>{
+  try {
+    const user = req.params.user;
+    // C# API
+    const outcome = await fetch(`${url}/location/${user}`);
+    if(outcome.ok){
+      const history = await outcome.json();
+      res.status(200).json(history);
+    }else{
+      throw outcome;
+    }
 
-route.post('/', (req, res)=>{
-  
-});
-
-route.post('/entry', (req, res)=>{
-  
+  } catch (error) {
+    res.status(400).send('Invalid request');
+  }
 });
 
 module.exports = route;
