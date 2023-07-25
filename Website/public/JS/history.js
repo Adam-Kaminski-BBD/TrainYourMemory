@@ -1,9 +1,11 @@
 import * as Fn from './navbar.js';
+
+ 
+
 document.addEventListener('DOMContentLoaded',()=>{
   isVerified();
   populateHistory();
   menuSetup();
-
 });
 
 function menuSetup(){
@@ -18,36 +20,39 @@ function isVerified(){
 }
 
 function populateHistory(){
+  // request to api
+  //Test data
   const response = [
     {
-      'Name': 'Johny Walker',
+      'Date': '14 July 2023',
       'Location': 'The Venue',
-      'Favourite Drink': 'Vodka Lime',
-      'Favourite Bar': 'Shakers'
+      'Drink': 'Vodka Lime',
+      'Cost': 'R45'
     },
     {
-      'Name': 'Jack Sparrow',
+      'Date': '14 July 2023',
       'Location': 'The Venue',
-      'Favourite Drink': 'Vodka Lime',
-      'Favourite Bar': 'Tigers Milk'
+      'Drink': 'Vodka Lime',
+      'Cost': 'R45'
     },
     {
-      'Name': 'Jamie Jameson',
+      'Date': '14 July 2023',
       'Location': 'The Venue',
-      'Favourite Drink': 'Vodka Lime',
-      'Favourite Bar': 'The Rooftop'
+      'Drink': 'Vodka Lime',
+      'Cost': 'R45'
     },
     {
-      'Name': 'Paul Klipdrift',
+      'Date': '14 July 2023',
       'Location': 'The Venue',
-      'Favourite Drink': 'Vodka Lime',
-      'Favourite Bar': 'Club Sheba'
+      'Drink': 'Vodka Lime',
+      'Cost': 'R45'
     },
   ];
 
   const tbody = document.getElementsByTagName('tbody')[0];
 
   for(let i = 0; i < response.length; i++){
+    // create tr and td for each key in the object
     const tr = document.createElement('tr');
     const keys = Object.keys(response[i]);
     keys.forEach(key=>{

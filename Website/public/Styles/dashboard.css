@@ -1,0 +1,88 @@
+:root{
+  --main_blue: #3C4AC6;
+  --bg_blue: #3c4ac62e;
+  --border_radius: 10px;
+}
+
+*{
+  padding: 0;
+  margin: 0;
+  font-family: Arial, Helvetica, sans-serif;
+  box-sizing: border-box;
+}
+
+html{
+  width: 100%;
+  height: 100%;
+}
+body{
+  width: 100%;
+  height: 100%;
+  display: grid;
+  grid-template-columns: .8fr 3fr;
+}
+
+.dashboard {
+  width: 100%;
+  height: 100%;
+  display: flexbox;
+  text-align: center;
+  overflow-y: auto;
+}
+
+.message-container {
+  margin-bottom: 20px;
+}
+
+.card-container {
+  width: 100%;
+  height: fit-content;
+  display: flex;
+  flex-wrap: wrap;
+  font-size: x-large;
+}
+
+.card {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 30%;
+  height: 150px;
+  background-color: #3C4AC6;
+  margin: 10px;
+  border-radius: 25px;
+}
+
+#result{
+  text-align: center;
+  font-size: small;
+}
+.card button {
+  margin-bottom: 10px;
+  color: black;
+  border-radius: 25px;
+  border: none;
+  background-color: #242D7D;
+  padding: 10px;
+  font-size: large;
+  height: 50px;
+  width: 165px;
+}
+
+.question{
+  text-align: center;
+  font-size: medium;
+}
+
+.answers{
+  display: flex;
+  flex-direction: column;
+}
+#history label{
+  margin: 10px 0 5px 0;
+}
+#history{
+  height: auto;
+}
+

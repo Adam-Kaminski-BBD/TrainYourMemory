@@ -1,13 +1,40 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard</title>
-    <script src="./dashboard.js"></script>
+  <title>Dashboard</title>
+  <link rel="stylesheet" type="text/css" href="./dashboard.css">
+  <link rel="stylesheet" type="text/css" href="./navbar.css">
+  <script src="./dashboard.js" type="module"></script>
 </head>
 <body>
-    <h1>What are you dopping?</h1>
-    <p>This is the homepage, showcasing dashboard of information</p>
+  <main class="dashboard">
+    <header class="message-container">
+      <h1 id="h1"></h1>
+      <h2 id="h2">Where have you been dopping?</h2>
+    </header>
+    <section class="card-container">
+      <card id="top-drink" class="card">
+        <p>Top Drink:</p><p id="drink"></p>
+      </card>
+      <card id="top-bar" class="card">
+        <p>Top Bar:</p><p id="bar"></p>
+      </card>
+      <card id="spending" class="card">
+        <p>Spending:</p><p id="spend"></p>
+      </card>
+      <card id="daily-quiz" class="card">
+        Daily Quiz:
+        <a href="./quiz.html">Play Here</a>
+      </card>
+      <card id="history" class="card">
+        <p>History:</p>
+          <label id="location1"></label>
+          <label id="location2"></label>
+          <label id="location3"></label>
+          <label id="location4"></label>
+      </card>
+    </section>
+  </main>
+
 </body>
 </html>
