@@ -1,0 +1,23 @@
+### New entry
+POST http://localhost:8080/api/entry
+Content-type: application/json
+
+{
+  "drink":"Vodka Lime",
+  "cost":45,
+  "location":"The Venue"
+}
+
+### New entry
+POST http://localhost:8080/api/user
+Content-type: application/json
+
+{
+  "email":"john@doe.com"
+}
+
+### get top drink for user
+GET http://localhost:8080/api/drink/top/"john@doe.com"
+
+### history
+GET http://localhost:8080/api/history/john@doe.com

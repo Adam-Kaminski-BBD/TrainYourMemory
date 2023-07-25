@@ -139,16 +139,47 @@ route.get('/spend/:user', urlencodedParser, async (req, res)=>{
 });
 
 route.get('/history/:user', urlencodedParser, async (req, res)=>{
+  
+  const dummy = [
+    {
+      'Date': '14 July 2023',
+      'Location': 'The Venue',
+      'Drink': 'Vodka Lime',
+      'Cost': 'R45'
+    },
+    {
+      'Date': '14 July 2023',
+      'Location': 'The Venue',
+      'Drink': 'Vodka Lime',
+      'Cost': 'R45'
+    },
+    {
+      'Date': '14 July 2023',
+      'Location': 'The Venue',
+      'Drink': 'Vodka Lime',
+      'Cost': 'R45'
+    },
+    {
+      'Date': '14 July 2023',
+      'Location': 'The Venue',
+      'Drink': 'Vodka Lime',
+      'Cost': 'R45'
+    },
+  ];
+  
   try {
     const user = req.params.user;
     // C# API
     const outcome = await fetch(`${url}/location/${user}`);
-    if(outcome.ok){
-      const history = await outcome.json();
-      res.status(200).json(history);
-    }else{
-      throw outcome;
-    }
+    
+    //for testing
+    res.status(200).send(dummy);
+    // if(outcome.ok){
+    //   const history = await outcome.json();
+    //   res.status(200).json(history);
+    // }else{
+    //   throw outcome;
+    // }
 
   } catch (error) {
     res.status(400).send('Invalid request');
