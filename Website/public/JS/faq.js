@@ -1,5 +1,4 @@
 import * as Fn from './navbar.js';
-
 document.addEventListener('DOMContentLoaded',()=>{
   menuSetup();
   clickerSetup();
