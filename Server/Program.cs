@@ -4,9 +4,10 @@ using Server.Repositories;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-builder.Services.AddScoped<DataContext, DataContext>();
-builder.Services.AddScoped<UserRepository, UserRepository>();
-builder.Services.AddScoped<DrinksRepository, DrinksRepository>();
+builder.Services.AddSingleton<DataContext, DataContext>();
+builder.Services.AddSingleton<UserRepository, UserRepository>();
+builder.Services.AddSingleton<DrinksRepository, DrinksRepository>();
+builder.Services.AddSingleton<FriendRepository, FriendRepository>();
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();

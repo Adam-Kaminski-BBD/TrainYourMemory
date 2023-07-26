@@ -20,6 +20,7 @@
 
         public Friends(int userId, int friendId)
         {
+            Id = 0;
             UserId = userId;
             FriendId = friendId;
         }

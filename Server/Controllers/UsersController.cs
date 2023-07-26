@@ -30,6 +30,7 @@ namespace Server.Controllers
         [HttpPost]
         public IActionResult PostUser(User user)
         {
+            Console.WriteLine(user.Id);
             if (user == null || user.Name == null || user.Email == null)
             {
                 return BadRequest("Must supply a name and a valid email address");
