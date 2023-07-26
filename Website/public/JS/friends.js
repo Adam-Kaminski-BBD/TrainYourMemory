@@ -17,46 +17,25 @@ function isVerified(){
   console.log('You got tokens bro?');
 }
 
-function populateHistory(){
-  const response = [
-    {
-      'Name': 'Johny Walker',
-      'Location': 'The Venue',
-      'Favourite Drink': 'Vodka Lime',
-      'Favourite Bar': 'Shakers'
-    },
-    {
-      'Name': 'Jack Sparrow',
-      'Location': 'The Venue',
-      'Favourite Drink': 'Vodka Lime',
-      'Favourite Bar': 'Tigers Milk'
-    },
-    {
-      'Name': 'Jamie Jameson',
-      'Location': 'The Venue',
-      'Favourite Drink': 'Vodka Lime',
-      'Favourite Bar': 'The Rooftop'
-    },
-    {
-      'Name': 'Paul Klipdrift',
-      'Location': 'The Venue',
-      'Favourite Drink': 'Vodka Lime',
-      'Favourite Bar': 'Club Sheba'
-    },
-  ];
+async function populateHistory(){
+  
+  try {
+    const user = 'john@doe.com';
+    const response = await fetch(`/api/friends/${user}`);
+    let friends = [];
+    if(response.ok){
+      friends = await response.json();
+    }
+    const tbody = document.getElementsByTagName('tbody')[0];
 
-  const tbody = document.getElementsByTagName('tbody')[0];
-
-  for(let i = 0; i < response.length; i++){
-    const tr = document.createElement('tr');
-    const keys = Object.keys(response[i]);
-    keys.forEach(key=>{
+    for (const friend of friends) {
+      const tr = document.createElement('tr');
       const td = document.createElement('td');
-      td.innerText = response[i][key];
+      td.innerText = friend;
       tr.appendChild(td);
-    });
-
-    tbody.appendChild(tr);
+      tbody.appendChild(tr);
+    }
+  } catch (error) {
+    alert(error);
   }
-
 }
