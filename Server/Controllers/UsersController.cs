@@ -10,42 +10,56 @@ namespace Server.Controllers
     {
 
         private readonly UserRepository _userRepository;
+        private readonly FriendRepository _friendRepository;
 
-        public UsersController(UserRepository userRepository) 
+        public UsersController(UserRepository userRepository, FriendRepository friendRepository) 
         {
             _userRepository = userRepository;
+            _friendRepository = friendRepository;
         }
 
 
         [HttpGet("{userId}")]
-        public User? GetUserById(int userId)
+        public IActionResult GetUserById(int userId)
         {
-            return _userRepository.GetUserById(userId);
+            User? user = _userRepository.GetUserById(userId);
+            if (user == null) { return NotFound(); }
+            return new JsonResult(user);
         }
 
         [HttpPost]
         public IActionResult PostUser(User user)
         {
-            if (user == null)
+            if (user == null || user.Name == null || user.Email == null)
             {
-                return BadRequest();
+                return BadRequest("Must supply a name and a valid email address");
             }
-            Console.WriteLine(user.Name);
-            Console.WriteLine(user.Email);
-            return new JsonResult(user);
+            if (_userRepository.CreateUser(user)) 
+            { 
+                return new JsonResult(user);
+            }
+            else 
+            { 
+                return BadRequest("Email Already Exists"); 
+            }
         }
 
         [HttpGet("{userId}/friends")]
-        public IEnumerable<User> GetFriends(int userId)
+        public IEnumerable<User?> GetFriends(int userId)
         {
-            User User = new User(1, "Daniel@gmail.com", "daniel");
-            return new List<User>() { User };
+            return _friendRepository.GetFriendsForUser(userId).Select(friend => friend.Friend).Where(user => user != null);
         }
 
         [HttpPost("{userId}/friends/{friendId}")]
         public IActionResult PostFriend(int userId, int friendId)
         {
-            return new EmptyResult();
+            if (_friendRepository.CreateFriend(userId, friendId))
+            {
+                return new EmptyResult();
+            } else
+            {
+                return BadRequest();
+            }
         }
 
         [HttpGet("{userId}/logs")]

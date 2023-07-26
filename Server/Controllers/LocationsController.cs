@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Server.Models;
+using Server.Repositories;
 
 namespace Server.Controllers
 {
@@ -7,21 +8,31 @@ namespace Server.Controllers
     [Route("[controller]")]
     public class LocationsController : Controller
     {
+        private readonly LocationsRepository _locationRepository;
+
+        public LocationsController(LocationsRepository locationRepository)
+        { 
+            _locationRepository = locationRepository;
+        }
+
         [HttpGet]
         public IActionResult GetAllLocations()
         {
-            IEnumerable<Location> locations = new List<Location>() { new Location("The Venue", 1), new Location("Scottish Ale House", 2) };
+            IEnumerable<Location> locations = _locationRepository.getAllLocations();
             return new JsonResult(locations);
         }
 
         [HttpPost]
         public IActionResult CreateLocation(Location location)
         {
-            if (location == null || location.Name == null)
+            if (_locationRepository.CreateLocation(location))
             {
-                return BadRequest();
+                return new JsonResult(location);
             }
-            return new JsonResult(location);
+            else
+            {
+                return BadRequest("Location Already Exists");
+            }
         }
     }
 }
