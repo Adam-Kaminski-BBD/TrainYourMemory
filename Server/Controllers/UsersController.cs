@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Server.Models;
+using Server.Models.DTO;
 using Server.Repositories;
 
 namespace Server.Controllers
@@ -11,13 +12,14 @@ namespace Server.Controllers
 
         private readonly UserRepository _userRepository;
         private readonly FriendRepository _friendRepository;
+        private readonly LogRepository _logRepository;
 
-        public UsersController(UserRepository userRepository, FriendRepository friendRepository) 
+        public UsersController(UserRepository userRepository, FriendRepository friendRepository, LogRepository logRepository)
         {
             _userRepository = userRepository;
             _friendRepository = friendRepository;
+            _logRepository = logRepository;
         }
-
 
         [HttpGet("{userId}")]
         public IActionResult GetUserById(int userId)
@@ -30,7 +32,6 @@ namespace Server.Controllers
         [HttpPost]
         public IActionResult PostUser(User user)
         {
-            Console.WriteLine(user.Id);
             if (user == null || user.Name == null || user.Email == null)
             {
                 return BadRequest("Must supply a name and a valid email address");
@@ -66,13 +67,27 @@ namespace Server.Controllers
         [HttpGet("{userId}/logs")]
         public IActionResult GetUserLogs(int userId)
         {
-            return new EmptyResult();
+            IEnumerable<Log> logs = _logRepository.GetLogsForUser(userId);
+            IEnumerable<LogDto> returnObjects = logs.Select(ConvertLogToLogDto);
+            return new JsonResult(returnObjects);
+        }
+
+        private LogDto ConvertLogToLogDto(Log log)
+        {
+            return new LogDto(log.Drink.Name, log.Quantity, log.Price, log.Date, log.Location.Name);
         }
 
         [HttpPost("{userId}/logs")]
         public IActionResult LogDrinks(int userId, LogEntry log)
         {
-            return new EmptyResult();
+            Log entity = new Log(log.Date, log.Quantity, log.Price, userId, log.LocationId, log.DrinkId);
+            if (_logRepository.CreateLog(entity))
+            {
+                return new EmptyResult();
+            } else
+            {
+                return BadRequest();
+            }
         }
 
 

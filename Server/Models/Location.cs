@@ -1,5 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
-using System.Text.Json.Serialization;
+﻿
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Server.Models
 {
@@ -8,14 +8,16 @@ namespace Server.Models
     {
 
         public string Name { get; set; }
-
-
-        [JsonIgnore]
-        public int Id { get; set; }
+        public int Id { get; internal set; }
         public Location(string name, int id) 
         { 
             Name = name;
             Id = id;
+        }
+        public Location() 
+        { 
+            Name = "";
+            Id = 0;
         }
 
     }

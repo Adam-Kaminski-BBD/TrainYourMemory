@@ -1,5 +1,4 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
-using System.Text.Json.Serialization;
 
 namespace Server.Models
 {
@@ -14,7 +13,19 @@ namespace Server.Models
             Name = name;
         }
 
-        [JsonIgnore]
+        public User(string email, string name)
+        {
+            Id = 0;
+            Email = email;
+            Name = name;
+        }
+
+        public User()
+        {
+            Id = 0;
+            Email = "";
+            Name = "";
+        }
         public int Id {  get; set; }
         public string Email { get; set; }
         public string Name { get; set; }

@@ -91,12 +91,34 @@ namespace Server.Repositories
         }
     }
 
+    public class LogRepository
+    {
+        private readonly DataContext _dataContext;
+
+        public LogRepository(DataContext dataContext)
+        {
+            _dataContext = dataContext;
+        }
+
+        public IEnumerable<Log> GetLogsForUser(int userId)
+        {
+            return _dataContext.Logs.Include("User").Include("Location").Include("Drink").Where(log => log.UserId == userId);
+        }
+
+        public bool CreateLog(Log log)
+        {
+            _dataContext.Logs.Add(log);
+            return _dataContext.SaveChanges() == 1;
+        }
+    }
+
     public class DataContext : DbContext
     {
         public DbSet<User> Users { get; set; }
         public DbSet<Drink> Drinks { get; set; }
         public DbSet<Location> Locations { get; set; }
         public DbSet<Friends> Friends { get; set; }
+        public DbSet<Log> Logs { get; set; }
         protected readonly IConfiguration Configuration;
 
         public DataContext(IConfiguration configuration)

@@ -7,7 +7,9 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddSingleton<DataContext, DataContext>();
 builder.Services.AddSingleton<UserRepository, UserRepository>();
 builder.Services.AddSingleton<DrinksRepository, DrinksRepository>();
+builder.Services.AddSingleton<LocationsRepository, LocationsRepository>();
 builder.Services.AddSingleton<FriendRepository, FriendRepository>();
+builder.Services.AddSingleton<LogRepository, LogRepository>();
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
