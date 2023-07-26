@@ -4,4 +4,4 @@ COPY package*.json ./
 RUN npm install && npm install cors --save
 COPY . .
 EXPOSE 8080
-CMD ["npm", "start"]
+CMD ["npm", "server"]
