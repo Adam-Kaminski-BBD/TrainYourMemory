@@ -3,7 +3,7 @@ using Server.Models;
 
 namespace Server.Repositories
 {
-    public class UserRepository
+    public class UserRepository : IUserRepository
     {
         private readonly DataContext _dataContext;
 
@@ -25,7 +25,7 @@ namespace Server.Repositories
 
     }
 
-    public class DrinksRepository
+    public class DrinksRepository: IDrinksRepository
     {
         private readonly DataContext _dataContext;
 
@@ -47,7 +47,7 @@ namespace Server.Repositories
 
     }
 
-    public class LocationsRepository
+    public class LocationsRepository: ILocationsRepository
     {
         private readonly DataContext _dataContext;
 
@@ -67,7 +67,7 @@ namespace Server.Repositories
         }
     }
 
-    public class FriendRepository
+    public class FriendRepository: IFriendRepository
     {
         private readonly DataContext _dataContext;
 
@@ -81,17 +81,15 @@ namespace Server.Repositories
             return _dataContext.Friends.Where(friend => friend.UserId == userId);
         }
 
-        public bool CreateFriend(int userId, int friendId)
+        public bool CreateFriend(Friends friendOne, Friends friendTwo)
         {
-            Friends friendOne = new Friends(userId, friendId);
-            Friends friendTwo = new Friends(friendId, userId);
             _dataContext.Friends.Add(friendOne);
             _dataContext.Friends.Add(friendTwo);
             return _dataContext.SaveChanges() == 2;
         }
     }
 
-    public class LogRepository
+    public class LogRepository: ILogRepository
     {
         private readonly DataContext _dataContext;
 

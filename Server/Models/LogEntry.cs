@@ -1,6 +1,4 @@
-﻿using System.Text.Json.Serialization;
-
-namespace Server.Models
+﻿namespace Server.Models
 {
     public class LogEntry
     {

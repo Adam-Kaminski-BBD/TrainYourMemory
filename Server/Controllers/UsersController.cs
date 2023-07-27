@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Server.Models;
-using Server.Models.DTO;
-using Server.Repositories;
+using Server.Models.RequestObjects;
+using Server.Service;
 
 namespace Server.Controllers
 {
@@ -10,86 +10,53 @@ namespace Server.Controllers
     public class UsersController : Controller
     {
 
-        private readonly UserRepository _userRepository;
-        private readonly FriendRepository _friendRepository;
-        private readonly LogRepository _logRepository;
+        private readonly UserService _userService;
 
-        public UsersController(UserRepository userRepository, FriendRepository friendRepository, LogRepository logRepository)
+        public UsersController(UserService userService)
         {
-            _userRepository = userRepository;
-            _friendRepository = friendRepository;
-            _logRepository = logRepository;
+            _userService = userService;
         }
 
         [HttpGet("{userId}")]
         public IActionResult GetUserById(int userId)
         {
-            User? user = _userRepository.GetUserById(userId);
+            User? user = _userService.GetUserById(userId);
             if (user == null) { return NotFound(); }
             return new JsonResult(user);
         }
 
         [HttpPost]
-        public IActionResult PostUser(User user)
+        public IActionResult PostUser(UserRequestObject user)
         {
             if (user == null || user.Name == null || user.Email == null)
             {
                 return BadRequest("Must supply a name and a valid email address");
             }
-            if (_userRepository.CreateUser(user)) 
-            { 
-                return new JsonResult(user);
-            }
-            else 
-            { 
-                return BadRequest("Email Already Exists"); 
-            }
+            return _userService.CreateUser(user) ? new EmptyResult() : BadRequest();
         }
 
         [HttpGet("{userId}/friends")]
-        public IEnumerable<User?> GetFriends(int userId)
+        public IEnumerable<User> GetFriends(int userId)
         {
-            return _friendRepository.GetFriendsForUser(userId).Select(friend => friend.Friend).Where(user => user != null);
+            return _userService.GetUsersFriends(userId);
         }
 
         [HttpPost("{userId}/friends/{friendId}")]
         public IActionResult PostFriend(int userId, int friendId)
         {
-            if (_friendRepository.CreateFriend(userId, friendId))
-            {
-                return new EmptyResult();
-            } else
-            {
-                return BadRequest();
-            }
+            return _userService.CreateFriend(userId, friendId) ? new EmptyResult() : BadRequest();
         }
 
         [HttpGet("{userId}/logs")]
         public IActionResult GetUserLogs(int userId)
         {
-            IEnumerable<Log> logs = _logRepository.GetLogsForUser(userId);
-            IEnumerable<LogDto> returnObjects = logs.Select(ConvertLogToLogDto);
-            return new JsonResult(returnObjects);
-        }
-
-        private LogDto ConvertLogToLogDto(Log log)
-        {
-            return new LogDto(log.Drink.Name, log.Quantity, log.Price, log.Date, log.Location.Name);
+            return new JsonResult(_userService.GetUserLogs(userId));
         }
 
         [HttpPost("{userId}/logs")]
         public IActionResult LogDrinks(int userId, LogEntry log)
         {
-            Log entity = new Log(log.Date, log.Quantity, log.Price, userId, log.LocationId, log.DrinkId);
-            if (_logRepository.CreateLog(entity))
-            {
-                return new EmptyResult();
-            } else
-            {
-                return BadRequest();
-            }
+            return _userService.CreateLog(userId, log) ? new EmptyResult() : BadRequest();
         }
-
-
     }
 }

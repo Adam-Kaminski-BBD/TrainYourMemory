@@ -8,7 +8,6 @@ namespace Server.Models
     public class Drink
     {
 
-        [JsonIgnore]
         public int Id { get; set; }
         public string Name { get; set; }
         public string Type { get; set; }
@@ -20,6 +19,14 @@ namespace Server.Models
             Type = type;
             AlcoholPercent = alcoholPercent;
             Id = id;
+        }
+
+        public Drink(string name, string type, decimal alcoholPercent)
+        {
+            Name = name;
+            Type = type;
+            AlcoholPercent = alcoholPercent;
+            Id = 0;
         }
 
         public Drink ()

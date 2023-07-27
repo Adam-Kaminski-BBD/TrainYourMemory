@@ -1,15 +1,18 @@
-using Microsoft.EntityFrameworkCore;
 using Server.Repositories;
+using Server.Service;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddSingleton<DataContext, DataContext>();
-builder.Services.AddSingleton<UserRepository, UserRepository>();
-builder.Services.AddSingleton<DrinksRepository, DrinksRepository>();
-builder.Services.AddSingleton<LocationsRepository, LocationsRepository>();
-builder.Services.AddSingleton<FriendRepository, FriendRepository>();
-builder.Services.AddSingleton<LogRepository, LogRepository>();
+builder.Services.AddSingleton<IUserRepository, UserRepository>();
+builder.Services.AddSingleton<IDrinksRepository, DrinksRepository>();
+builder.Services.AddSingleton<ILocationsRepository, LocationsRepository>();
+builder.Services.AddSingleton<IFriendRepository, FriendRepository>();
+builder.Services.AddSingleton<ILogRepository, LogRepository>();
+builder.Services.AddSingleton<UserService, UserService>();
+builder.Services.AddSingleton<LocationsService, LocationsService>();
+builder.Services.AddSingleton<DrinksService, DrinksService>();
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();

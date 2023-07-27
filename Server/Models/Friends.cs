@@ -5,9 +5,9 @@
 
         public int Id { get; set; }
         public int UserId { get; set; }
-        public User? User { get; set; }  
+        public User User { get; set; }  
         public int FriendId { get; set; }
-        public User? Friend { get; set; }
+        public User Friend { get; set; }
 
         public Friends(int id, int userId, User user, int friendId, User friend)
         {
@@ -23,6 +23,8 @@
             Id = 0;
             UserId = userId;
             FriendId = friendId;
+            User = new User();
+            Friend = new User();
         }
     }
 }

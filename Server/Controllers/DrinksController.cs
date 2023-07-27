@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Server.Models;
-using Server.Repositories;
+using Server.Models.RequestObjects;
+using Server.Service;
 
 namespace Server.Controllers
 {
@@ -10,30 +10,23 @@ namespace Server.Controllers
     public class DrinksController : Controller
     {
 
-        private readonly DrinksRepository _drinkRepository;
+        private readonly DrinksService _drinksService;
 
-        public DrinksController(DrinksRepository drinksRepository)
+        public DrinksController(DrinksService drinksService)
         {
-            _drinkRepository = drinksRepository;
+            _drinksService = drinksService;
         }
 
         [HttpGet]
         public IActionResult GetAllDrinks()
         {
-            IEnumerable<Drink> drinks = _drinkRepository.GetAllDrinks();
-            return new JsonResult(drinks);
+            return new JsonResult(_drinksService.GetAllDrinks());
         }
 
         [HttpPost]
-        public IActionResult CreateDrink(Drink drink)
+        public IActionResult CreateDrink(DrinksRequestObject drink)
         {
-            if (_drinkRepository.CreateDrink(drink))
-            {
-                return new JsonResult(drink);
-            } else
-            {
-                return BadRequest("Drink Already Exists");
-            }
+            return _drinksService.CreateDrink(drink) ? new EmptyResult() : BadRequest();
         }
     }
 }

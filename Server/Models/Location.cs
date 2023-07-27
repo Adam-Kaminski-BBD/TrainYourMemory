@@ -14,6 +14,11 @@ namespace Server.Models
             Name = name;
             Id = id;
         }
+        public Location(string name)
+        {
+            Name = name;
+            Id = 0;
+        }
         public Location() 
         { 
             Name = "";
