@@ -19,6 +19,9 @@ app.use(session({
   secret: 'your-secret-key-here',
   resave: false,
   saveUninitialized: false,
+  cookie: {
+    maxAge: 60 * 60 * 1000, // Makes the cookie valid for an hour in milliseconds
+  }
 }));
 
 app.use(passport.initialize());
