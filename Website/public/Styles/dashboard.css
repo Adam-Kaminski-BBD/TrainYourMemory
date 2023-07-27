@@ -1,7 +1,9 @@
 :root{
   --main_blue: #3C4AC6;
   --bg_blue: #3c4ac62e;
+  --bg_blue_2: #3c4ac6a4;
   --border_radius: 10px;
+  --main_maroon: #cd003a;
 }
 
 *{
@@ -9,6 +11,7 @@
   margin: 0;
   font-family: Arial, Helvetica, sans-serif;
   box-sizing: border-box;
+  color: white;
 }
 
 html{
@@ -30,6 +33,13 @@ body{
   overflow-y: auto;
 }
 
+#h1{
+  color: black;
+}
+#h2{
+  color: black;
+}
+
 .message-container {
   margin-bottom: 20px;
 }
@@ -49,6 +59,7 @@ body{
   align-items: center;
   width: 30%;
   height: 150px;
+  min-height: fit-content;
   background-color: #3C4AC6;
   margin: 10px;
   border-radius: 25px;
@@ -79,10 +90,46 @@ body{
   display: flex;
   flex-direction: column;
 }
-#history label{
-  margin: 10px 0 5px 0;
-}
 #history{
-  height: auto;
+  overflow-y: auto;
+  height: 200px;
 }
 
+#addNew{
+  background-color: transparent;
+}
+
+#addNew h3, #addNew a{
+  color: black;
+}
+
+#addNew a{
+  font-size: 5rem;
+  text-decoration: none;
+  height: fit-content;
+  width: 5rem;
+  transition: all .15s ease;
+  border-radius: var(--border_radius);
+}
+
+#addNew a:hover{
+  background-color: rgba(0, 0, 0, 0.292);
+}
+
+#top-drink{
+  background: linear-gradient(120deg, var(--main_blue), var(--main_maroon));
+}
+
+#top-bar{
+  background: linear-gradient(30deg, var(--main_maroon), var(--main_blue));
+}
+
+#daily-quiz{
+  height: 100px;
+  margin-top: 7rem;
+  background: linear-gradient(45deg, var(--main_blue), var(--main_maroon));
+}
+
+#history{
+  background: linear-gradient(120deg, var(--main_maroon), var(--main_blue));
+}
