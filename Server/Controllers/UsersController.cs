@@ -17,10 +17,10 @@ namespace Server.Controllers
             _userService = userService;
         }
 
-        [HttpGet("{userId}")]
-        public IActionResult GetUserById(int userId)
+        [HttpGet("{email}")]
+        public IActionResult GetUserById(string email)
         {
-            User? user = _userService.GetUserById(userId);
+            User? user = _userService.GetUserByEmail(email);
             if (user == null) { return NotFound(); }
             return new JsonResult(user);
         }
@@ -35,7 +35,7 @@ namespace Server.Controllers
             return _userService.CreateUser(user) ? new EmptyResult() : BadRequest();
         }
 
-        [HttpGet("{userId}/friends")]
+        [HttpGet("{email}/friends")]
         public IEnumerable<User> GetFriends(int userId)
         {
             return _userService.GetUsersFriends(userId);

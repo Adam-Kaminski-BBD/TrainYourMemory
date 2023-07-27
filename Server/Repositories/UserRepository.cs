@@ -17,6 +17,11 @@ namespace Server.Repositories
             return _dataContext.Users.Where(user => user.Id == id).FirstOrDefault();
         }
 
+        public User? GetUserByEmail(string email)
+        {
+            return _dataContext.Users.Where(user => user.Email == email).FirstOrDefault();
+        }
+
         public bool CreateUser(User user)
         {
             _dataContext.Users.Add(user);

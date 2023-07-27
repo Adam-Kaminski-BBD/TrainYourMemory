@@ -29,6 +29,11 @@ namespace Server.Service
             return _userRepository.GetUserById(id);
         }
 
+        public User? GetUserByEmail(string email)
+        {
+            return _userRepository.GetUserByEmail(email);
+        }
+
         public IEnumerable<User> GetUsersFriends(int userId)
         {
             return _friendRepository.GetFriendsForUser(userId).Select(friend => friend.Friend);

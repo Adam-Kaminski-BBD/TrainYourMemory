@@ -9,6 +9,7 @@ namespace Server.Repositories
     public interface IUserRepository : IRepository
     {
         public User? GetUserById(int id);
+        public User? GetUserByEmail(string email);
         public bool CreateUser(User user);
     }
 
