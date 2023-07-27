@@ -28,7 +28,6 @@ namespace Server.Controllers
         }
 
         [HttpPost]
-        [CustomAuth]
         public IActionResult PostUser(User user)
         {
             if (user == null || user.Name == null || user.Id == null)
