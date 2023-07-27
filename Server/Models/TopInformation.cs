@@ -2,11 +2,11 @@
 {
     public class TopInformation
     {
-        private Drink? Drink { get; set; }
-        private Location? Location { get; set; }
-        private decimal MoneySpent { get; set; }
+        public Drink? Drink { get; set; }
+        public Location? Location { get; set; }
+        public decimal MoneySpent { get; set; }
 
-        public TopInformation(Drink? drink, Location? location, decimal moneySpent)
+        public TopInformation(Drink drink, Location location, decimal moneySpent)
         {
             Drink = drink;
             Location = location;
@@ -16,6 +16,11 @@
         public TopInformation() 
         {
             MoneySpent = 0;
+        }
+
+        public string ToString()
+        {
+            return "{" + Drink + "," + Location + "," + MoneySpent + "}";
         }
     }
 }

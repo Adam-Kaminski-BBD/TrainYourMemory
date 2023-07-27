@@ -62,7 +62,9 @@ namespace Server.Controllers
         [HttpGet("{email}/logs/top")]
         public IActionResult GetTopDrink(string email)
         {
-            return new JsonResult(_userService.GetTopInformation(email));
+            TopInformation information = _userService.GetTopInformation(email);
+            Console.WriteLine(information.ToString());
+            return new JsonResult(information);
         }
     }
 }

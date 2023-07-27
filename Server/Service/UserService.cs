@@ -67,8 +67,13 @@ namespace Server.Service
             IEnumerable<Log> userLogs = _logRepository.GetLogsForUser(userEmail);
             if (userLogs.IsNullOrEmpty())
             {
+                Console.WriteLine("WE ARE HERE");
                 return new TopInformation();
             }
+            Console.WriteLine("THERR IS SOMEWTHING \n\n\n");
+            Console.WriteLine(GetTopDrink(userLogs));
+            Console.WriteLine(GetTopLocation(userLogs));
+            Console.WriteLine(GetMoneySpent(userLogs));
             return new TopInformation(GetTopDrink(userLogs), GetTopLocation(userLogs), GetMoneySpent(userLogs));
         }
 
