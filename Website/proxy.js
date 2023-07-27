@@ -289,6 +289,7 @@ route.get('/user', (req, res)=>{
   if(req.isAuthenticated()){
     res.status(200).send({
       id: req.user.id,
+      name: req.user.displayName,
       token: req.user.token
     });
   }else{

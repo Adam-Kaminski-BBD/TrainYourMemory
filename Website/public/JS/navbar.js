@@ -32,9 +32,9 @@ const tabs = [
 ];
 
 
-export function renderNavbar() {
+export function renderNavbar(user) {
   //I'll get the ude from local/sessional storage or wherever else they store it
-  const name = 'Thabang';
+  const name = user;
   const navbarElement = document.createElement('div');
   navbarElement.className = 'nav-bar';
   
