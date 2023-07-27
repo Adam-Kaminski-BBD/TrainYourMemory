@@ -6,8 +6,7 @@ USE [TrainYourMemory]
 GO
 
 CREATE TABLE [dbo].[Users] (
-    [Id]    INT           IDENTITY (1, 1) NOT NULL,
-    [Email] VARCHAR (MAX) NOT NULL UNIQUE,
+    [Id] VARCHAR (450) NOT NULL,
     [Name]  VARCHAR (50)  NOT NULL,
     CONSTRAINT [PK_Users] PRIMARY KEY CLUSTERED ([Id] ASC)
 );
@@ -28,7 +27,7 @@ CREATE TABLE [dbo].[Drinks] (
 
 CREATE TABLE [dbo].[Log] (
     [Id]         INT      IDENTITY (1, 1) NOT NULL,
-    [UserId]     INT      NOT NULL,
+    [UserId] VARCHAR (450) NOT NULL,
     [LocationId] INT      NOT NULL,
     [DrinkId]    INT      NOT NULL,
     [Quantity]   INT      NOT NULL,
@@ -42,63 +41,9 @@ CREATE TABLE [dbo].[Log] (
 CREATE TABLE [dbo].[Friends]
 (
     [Id]         INT      IDENTITY (1, 1) NOT NULL,
-    [UserId] INT NOT NULL, 
-    [FriendId] INT NOT NULL, 
+    [UserId] VARCHAR (450) NOT NULL,
+    [FriendId] VARCHAR (450) NOT NULL,
     CONSTRAINT [PK_Friends] PRIMARY KEY CLUSTERED ([Id] ASC),
     CONSTRAINT [FK_User] FOREIGN KEY ([UserId]) REFERENCES [dbo].[Users]([Id]),
     CONSTRAINT [FK_Friend] FOREIGN KEY ([FriendId]) REFERENCES [dbo].[Users]([Id])
 );
-
-CREATE PROCEDURE [dbo].[InsertUser]
-	@Email varchar(max),
-	@Name varchar(max)
-AS
-BEGIN
-	INSERT INTO [dbo].[Users] ([Email], [Name])
-	VALUES (@Email, @Name)
-END
-GO
-
-CREATE PROCEDURE [dbo].[InsertLocation]
-	@Name varchar(max)
-AS
-BEGIN
-	INSERT INTO [dbo].[Locations] ([Name])
-	VALUES (@Name)
-END
-GO
-
-CREATE PROCEDURE [dbo].[InsertDrink]
-    @Name varchar(50),
-    @Type varchar(50),
-    @AlcoholPercent decimal(5,3)
-AS
-BEGIN
-	INSERT INTO [dbo].[Drinks] ([Name], [Type], [AlcoholPercent])
-	VALUES (@Name, @Type, @AlcoholPercent)
-END
-GO
-
-CREATE PROCEDURE [dbo].[InsertLog]
-	@UserID int,
-	@LocationID int,
-	@DrinkID int,
-	@Quantity int,
-	@Price money,
-	@Date datetime = NULL
-AS
-BEGIN
-	SET @Date = ISNULL(@Date, GETDATE()) 
-	INSERT INTO [dbo].[Log] ([UserId], [LocationId], [DrinkId], [Quantity], [Price], [Date])
-	VALUES (@UserID, @LocationID, @DrinkID, @Quantity, @Price, @Date)
-END
-GO
-
-CREATE VIEW dbo.View_Log
-AS
-SELECT [dbo].[Log].[Id], [dbo].[Users].[Name] AS [User], [dbo].[Locations].[Name] AS Location, [dbo].[Drinks].[Name] AS Drink, [dbo].[Drinks].[Type], [dbo].[Drinks].[AlcoholPercent], [dbo].[Log].[Quantity], [dbo].[Log].[Price], [dbo].[Log].[Date]
-FROM [dbo].[Log] 
-    INNER JOIN [dbo].[Users] ON [dbo].[Log].[UserId] = [dbo].[Users].[Id]
-    INNER JOIN [dbo].[Locations] ON [dbo].[Log].[LocationId] = [dbo].[Locations].[Id]
-    INNER JOIN [dbo].[Drinks] ON [dbo].[Log].[DrinkId] = [dbo].[Drinks].[Id]
-GO

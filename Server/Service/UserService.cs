@@ -24,14 +24,14 @@ namespace Server.Service
             return _userRepository.CreateUser(user);
         }
 
-        public User? GetUserById(int id)
+        public User? GetUserById(string id)
         {
             return _userRepository.GetUserById(id);
         }
 
         public User? GetUserByEmail(string email)
         {
-            return _userRepository.GetUserByEmail(email);
+            return _userRepository.GetUserById(email);
         }
 
         public IEnumerable<User> GetUsersFriends(string userEmail)
