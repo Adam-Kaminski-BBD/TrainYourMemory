@@ -17,7 +17,7 @@ const app = express();
 app.use(cors());
 
 app.use(cookieSession({
-  maxAge: 24 * 60 * 1000,
+  maxAge: 60 * 60 * 1000,
   keys: ['randomstringhere']
 }));
 
@@ -25,9 +25,9 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 passport.use(new GoogleStrategy({
-  clientID: '854819648821-mjv3cikjpfato9nrmti9363892tb4cvg.apps.googleusercontent.com',
-  clientSecret: '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',
-  callbackURL: 'http://localhost:8080/dashboard'
+  clientID: process.env.CLIENTID,
+  clientSecret: process.env.CLIENTSECRET,
+  callbackURL: '/dashboard'
 },
 (accessToken, refreshToken, profile, done) => {
   done(null, profile);
