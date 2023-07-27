@@ -86,12 +86,6 @@ route.get('/drinks', urlencodedParser, async (req, res)=>{
 
 //just in case we need it somewhere
 route.get('/friends', urlencodedParser, async (req, res)=>{
-  const dummy = [
-    'Johny Walker',
-    'Jack Sparrow',
-    'Jamie Jameson',
-    'Paul Klipdrift',
-  ];
   try {
     const outcome = await fetch(`${url}/friends`);
     if(outcome.ok){
@@ -102,7 +96,7 @@ route.get('/friends', urlencodedParser, async (req, res)=>{
     }
 
   } catch (error) {
-    res.status(200).json(dummy);
+    res.status(200).send('Invalid request');
   }
 });
 
@@ -204,8 +198,12 @@ route.get('/locations', urlencodedParser, async (req, res)=>{
 route.get('/location/top/:user', urlencodedParser, async (req, res)=>{
   try {
     const user = req.params.user;
+    const token = req.headers['authorization'].split(' ')[1];
+
+    data['method'] = 'GET';
+    data['headers']['authorization'] = token;
     // C# API
-    const outcome = await fetch(`${url}/location/${user}`);
+    const outcome = await fetch(`${url}/entry/${user}`, data);
     if(outcome.ok){
       const location = await outcome.json();
       res.status(200).json(location);
@@ -221,8 +219,12 @@ route.get('/location/top/:user', urlencodedParser, async (req, res)=>{
 route.get('/spend/:user', urlencodedParser, async (req, res)=>{
   try {
     const user = req.params.user;
+    const token = req.headers['authorization'].split(' ')[1];
+
+    data['method'] = 'GET';
+    data['headers']['authorization'] = token;
     // C# API
-    const outcome = await fetch(`${url}/spend/${user}`);
+    const outcome = await fetch(`${url}/entry/${user}`, data);
     if(outcome.ok){
       const spend = await outcome.json();
       res.status(200).json(spend);
