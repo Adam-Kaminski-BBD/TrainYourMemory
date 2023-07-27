@@ -26,6 +26,10 @@ const urlencodedParser = bodyParser.urlencoded({
 
 route.post('/entry', urlencodedParser, async (req, res)=>{
   try {
+    const token = req.headers['authorization'].split(' ')[1];
+
+    data['method'] = 'POST';
+    data['headers']['authorization'] = token;
     const entry = req.body;
     data['body'] = entry;
 
@@ -45,6 +49,10 @@ route.post('/entry', urlencodedParser, async (req, res)=>{
 
 route.post('/user', urlencodedParser, async (req, res)=>{
   try {
+    const token = req.headers['authorization'].split(' ')[1];
+
+    data['method'] = 'POST';
+    data['headers']['authorization'] = token;
     const entry = req.body;
     data['body'] = entry;
 
@@ -62,13 +70,10 @@ route.post('/user', urlencodedParser, async (req, res)=>{
 });
 
 route.get('/drinks', urlencodedParser, async (req, res)=>{
-  const dummy = [
-    'Vodka Lime',
-    'Redbull Vodka',
-    'Water',
-    'Orange Juice',
-    'Champagne'
-  ];
+  const token = req.headers['authorization'].split(' ')[1];
+
+  data['method'] = 'GET';
+  data['headers']['authorization'] = token;
   try {
     const outcome = await fetch(`${url}/drinks`);
     if(outcome.ok){
@@ -79,14 +84,17 @@ route.get('/drinks', urlencodedParser, async (req, res)=>{
     }
 
   } catch (error) {
-    res.status(200).json(dummy);
-    // res.status(400).send('Invalid request');
+    res.status(400).send('Invalid request');
   }
 });
 
 //just in case we need it somewhere
 route.get('/friends', urlencodedParser, async (req, res)=>{
   try {
+    const token = req.headers['authorization'].split(' ')[1];
+
+    data['method'] = 'GET';
+    data['headers']['authorization'] = token;
     const outcome = await fetch(`${url}/friends`);
     if(outcome.ok){
       const friends = await outcome.json();
@@ -123,7 +131,12 @@ route.get('/drink/top/:user', urlencodedParser, async (req, res)=>{
 //Get drinks related to that user
 route.get('/drinks/:user', urlencodedParser, async (req, res)=>{
   try {
+
     const user = req.params.user;
+    const token = req.headers['authorization'].split(' ')[1];
+
+    data['method'] = 'GET';
+    data['headers']['authorization'] = token;
     // C# API
     const outcome = await fetch(`${url}/drinks/${user}`);
     if(outcome.ok){
@@ -141,6 +154,10 @@ route.get('/drinks/:user', urlencodedParser, async (req, res)=>{
 route.get('/friends/:user', urlencodedParser, async (req, res)=>{
   try {
     const user = req.params.user;
+    const token = req.headers['authorization'].split(' ')[1];
+
+    data['method'] = 'GET';
+    data['headers']['authorization'] = token;
     // C# API
     const outcome = await fetch(`${url}/friends/${user}`);
     if(outcome.ok){
@@ -158,6 +175,10 @@ route.get('/friends/:user', urlencodedParser, async (req, res)=>{
 route.get('/locations/:user', urlencodedParser, async (req, res)=>{
   try {
     const user = req.params.user;
+    const token = req.headers['authorization'].split(' ')[1];
+
+    data['method'] = 'GET';
+    data['headers']['authorization'] = token;
     // C# API
     const outcome = await fetch(`${url}/locations/${user}`);
     if(outcome.ok){
@@ -172,14 +193,11 @@ route.get('/locations/:user', urlencodedParser, async (req, res)=>{
 });
 
 route.get('/locations', urlencodedParser, async (req, res)=>{
-  const dummy = [
-    '1 Discovery Place',
-    'The Yellowbrick road',
-    'Mom house',
-    'Bro house',
-    'Her house'
-  ];
   try {
+    const token = req.headers['authorization'].split(' ')[1];
+
+    data['method'] = 'GET';
+    data['headers']['authorization'] = token;
     // C# API
     const outcome = await fetch(`${url}/locations`);
     if(outcome.ok){
@@ -190,8 +208,7 @@ route.get('/locations', urlencodedParser, async (req, res)=>{
     }
 
   } catch (error) {
-    res.send(dummy);
-    // res.status(400).send('Invalid request');
+    res.status(400).send('Invalid request');
   }
 });
 
@@ -238,36 +255,12 @@ route.get('/spend/:user', urlencodedParser, async (req, res)=>{
 });
 
 route.get('/history/:user', urlencodedParser, async (req, res)=>{
-  
-  const dummy = [
-    {
-      'Date': '14 July 2023',
-      'Location': 'The Venue',
-      'Drink': 'Vodka Lime',
-      'Cost': 'R45'
-    },
-    {
-      'Date': '14 July 2023',
-      'Location': 'The Venue',
-      'Drink': 'Vodka Lime',
-      'Cost': 'R45'
-    },
-    {
-      'Date': '14 July 2023',
-      'Location': 'The Venue',
-      'Drink': 'Vodka Lime',
-      'Cost': 'R45'
-    },
-    {
-      'Date': '14 July 2023',
-      'Location': 'The Venue',
-      'Drink': 'Vodka Lime',
-      'Cost': 'R45'
-    },
-  ];
-  
   try {
     const user = req.params.user;
+    const token = req.headers['authorization'].split(' ')[1];
+
+    data['method'] = 'GET';
+    data['headers']['authorization'] = token;
     // C# API
     const outcome = await fetch(`${url}/location/${user}`);
     
@@ -275,9 +268,7 @@ route.get('/history/:user', urlencodedParser, async (req, res)=>{
       const history = await outcome.json();
       res.status(200).json(history);
     }else{
-      res.status(200).send(dummy);
-      // Doing because it will be invalid until actual call
-      // throw outcome;
+      throw outcome;
     }
 
   } catch (error) {
@@ -293,7 +284,7 @@ route.get('/user', (req, res)=>{
       token: req.user.token
     });
   }else{
-    res.status(400).send('Invalid');
+    res.status(400).send('Invalid Request');
   }
 });
 
