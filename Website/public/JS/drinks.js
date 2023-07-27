@@ -7,7 +7,7 @@ document.addEventListener('DOMContentLoaded',async ()=>{
   const token = userInfo.token;
   const id = userInfo.id;
   isVerified();
-  populateHistory(token, id);
+  populateDrinks(token, id);
   menuSetup(name);
 });
 
@@ -22,7 +22,7 @@ function isVerified(){
   console.log('You got tokens bro?');
 }
 
-async function populateHistory(token, id){
+async function populateDrinks(token, id){
   try {
     const data = {
       method: 'GET',
