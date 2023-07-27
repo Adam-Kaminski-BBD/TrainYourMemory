@@ -1,20 +1,32 @@
-﻿using Google.Apis.Auth;
-
-namespace Server.Auth
+﻿namespace Server.Auth
 {
     public class JwtAuthorization
     {
 
-        public static async Task<bool> ValidateWithUserName(string token, string userId)
+        public static async Task<bool> ValidateToken(string token)
         {
-            GoogleJsonWebSignature.Payload payload = await ValidateAsync(token);
-            return payload.Subject == userId;
-        }
-        public static async Task<GoogleJsonWebSignature.Payload> ValidateAsync(string token)
-        {
-            GoogleJsonWebSignature.Payload Sig = await GoogleJsonWebSignature.ValidateAsync(token, null, false);
+           using(HttpClient client = new HttpClient())
+            {
+                try
+                {
+                    client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", token);
 
-            return Sig;
+                    var response = await client.GetAsync("https://www.googleapis.com/oauth2/v3/tokeninfo");
+                    if (response.IsSuccessStatusCode)
+                    {
+                        var responseContent = await response.Content.ReadAsStringAsync();
+                        return true;
+                    }
+                    else
+                    {
+                        return false;
+                    }
+                }
+                catch (Exception ex)
+                {
+                    return false;
+                }
+            }
         }
         
     }

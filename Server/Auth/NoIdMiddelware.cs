@@ -11,12 +11,14 @@ namespace Server.Auth
             Console.WriteLine("HERE");
             Microsoft.Extensions.Primitives.StringValues authorizationToken;
             filterContext.HttpContext.Request.Headers.TryGetValue("authorization", out authorizationToken);
+            Console.WriteLine(authorizationToken.First());
             try
             {
-                var hold = await JwtAuthorization.ValidateAsync(authorizationToken.First());
+                var hold = await JwtAuthorization.ValidateToken(authorizationToken.First());
             }
             catch (Exception ex)
             {
+                Console.WriteLine(ex.ToString());
                 filterContext.Result = new UnauthorizedResult();
             }
         }

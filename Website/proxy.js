@@ -75,7 +75,7 @@ route.get('/drinks', urlencodedParser, async (req, res)=>{
     const token = req.headers['authorization'].split(' ')[1];
     data['method'] = 'GET';
     data['headers']['authorization'] = token;
-    const outcome = await fetch(`${url}/drinks`);
+    const outcome = await fetch(`${url}/drinks`, data);
     if(outcome.ok){
       const drinks = await outcome.json();
       res.status(200).json(drinks);
@@ -94,7 +94,7 @@ route.get('/friends', urlencodedParser, async (req, res)=>{
     data['method'] = 'GET';
     data['headers']['authorization'] = token;
 
-    const outcome = await fetch(`${url}/friends`);
+    const outcome = await fetch(`${url}/friends`, data);
     if(outcome.ok){
       const friends = await outcome.json();
       res.status(200).json(friends);
@@ -137,7 +137,7 @@ route.get('/drinks/:user', urlencodedParser, async (req, res)=>{
     data['method'] = 'GET';
     data['headers']['authorization'] = token;
     // C# API
-    const outcome = await fetch(`${url}/drinks/${user}`);
+    const outcome = await fetch(`${url}/drinks/${user}`, data);
     if(outcome.ok){
       res.status(200).send('All good!');
     }else{
@@ -158,7 +158,7 @@ route.get('/friends/:user', urlencodedParser, async (req, res)=>{
     data['method'] = 'GET';
     data['headers']['authorization'] = token;
     // C# API
-    const outcome = await fetch(`${url}/friends/${user}`);
+    const outcome = await fetch(`${url}/friends/${user}`, data);
     if(outcome.ok){
       res.status(200).send('All good!');
     }else{
@@ -179,7 +179,7 @@ route.get('/locations/:user', urlencodedParser, async (req, res)=>{
     data['method'] = 'GET';
     data['headers']['authorization'] = token;
     // C# API
-    const outcome = await fetch(`${url}/locations/${user}`);
+    const outcome = await fetch(`${url}/locations/${user}`, data);
     if(outcome.ok){
       res.status(200).send('All good!');
     }else{
@@ -198,7 +198,7 @@ route.get('/locations', urlencodedParser, async (req, res)=>{
     data['method'] = 'GET';
     data['headers']['authorization'] = token;
     // C# API
-    const outcome = await fetch(`${url}/locations`);
+    const outcome = await fetch(`${url}/locations`, data);
     if(outcome.ok){
       const locations = await outcome.json();
       res.status(200).json(locations);
@@ -261,7 +261,7 @@ route.get('/history/:user', urlencodedParser, async (req, res)=>{
     data['method'] = 'GET';
     data['headers']['authorization'] = token;
     // C# API
-    const outcome = await fetch(`${url}/location/${user}`);
+    const outcome = await fetch(`${url}/location/${user}`, data);
     
     if(outcome.ok){
       const history = await outcome.json();
