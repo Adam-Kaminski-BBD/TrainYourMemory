@@ -89,8 +89,8 @@ async function drinkSetup(token){
     const drop_drink = document.getElementById('drop_drink');
     drinks.forEach(drink =>{
       const option = document.createElement('option');
-      option.value = drink.trim().toLowerCase();
-      option.text = drink;
+      option.value = drink.id;
+      option.text = drink.name;
       drop_drink.appendChild(option);
     });
 
