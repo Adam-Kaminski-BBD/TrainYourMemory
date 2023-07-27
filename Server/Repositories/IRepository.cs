@@ -34,7 +34,7 @@ namespace Server.Repositories
     public interface IFriendRepository: IRepository
     {
         public IEnumerable<Friends> GetFriendsForUser(string userEmail);
-        public bool CreateFriend(Friends friendOne, Friends friendTwo);
+        public bool CreateFriend(Friends friend);
        
     }
 

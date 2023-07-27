@@ -29,6 +29,7 @@ namespace Server.Models
             Name = "";
         }
         [JsonIgnore]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id {  get; set; }
         [Key]
         public string Email { get; set; }

@@ -4,15 +4,15 @@ using Server.Service;
 var builder = WebApplication.CreateBuilder(args);
 builder.Configuration.AddEnvironmentVariables();
 // Add services to the container.
-builder.Services.AddSingleton<DataContext, DataContext>();
-builder.Services.AddSingleton<IUserRepository, UserRepository>();
-builder.Services.AddSingleton<IDrinksRepository, DrinksRepository>();
-builder.Services.AddSingleton<ILocationsRepository, LocationsRepository>();
-builder.Services.AddSingleton<IFriendRepository, FriendRepository>();
-builder.Services.AddSingleton<ILogRepository, LogRepository>();
-builder.Services.AddSingleton<UserService, UserService>();
-builder.Services.AddSingleton<LocationsService, LocationsService>();
-builder.Services.AddSingleton<DrinksService, DrinksService>();
+builder.Services.AddScoped<DataContext, DataContext>();
+builder.Services.AddScoped<IUserRepository, UserRepository>();
+builder.Services.AddScoped<IDrinksRepository, DrinksRepository>();
+builder.Services.AddScoped<ILocationsRepository, LocationsRepository>();
+builder.Services.AddScoped<IFriendRepository, FriendRepository>();
+builder.Services.AddScoped<ILogRepository, LogRepository>();
+builder.Services.AddScoped<UserService, UserService>();
+builder.Services.AddScoped<LocationsService, LocationsService>();
+builder.Services.AddScoped<DrinksService, DrinksService>();
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();

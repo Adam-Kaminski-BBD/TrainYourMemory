@@ -11,11 +11,11 @@ namespace Server.Models
         public decimal Price { get; set; }
         public string UserEmail { get; set; }
         [ForeignKey("UserEmail")]
-        public User User { get; set; }
+        public User? User { get; set; }
         public int LocationId { get; set; }
-        public Location Location { get; set; }
+        public Location? Location { get; set; }
         public int DrinkId { get; set; }   
-        public Drink Drink { get; set; }
+        public Drink? Drink { get; set; }
 
         public Log(int id, DateTime date, int quantity, decimal price, string userEmail, User user, int locationId, Location location, int drinkId, Drink drink)
         {
@@ -39,9 +39,6 @@ namespace Server.Models
             UserEmail = userEmail;
             LocationId = locationId;
             DrinkId = drinkId;
-            User = new User();
-            Location = new Location();
-            Drink = new Drink();
         }
     }
 }

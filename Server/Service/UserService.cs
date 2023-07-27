@@ -1,6 +1,7 @@
 ﻿using Microsoft.IdentityModel.Tokens;
 using Server.Models;
 using Server.Models.DTO;
+using Server.Models.RequestObjects;
 using Server.Repositories;
 
 namespace Server.Service
@@ -35,14 +36,18 @@ namespace Server.Service
 
         public IEnumerable<User> GetUsersFriends(string userEmail)
         {
-            return _friendRepository.GetFriendsForUser(userEmail).Select(friend => friend.Friend);
+            return _friendRepository.GetFriendsForUser(userEmail).Select(friend => friend.Friend).Where(user => user != null);
         }
 
         public bool CreateFriend(string userEmail, string friendEmail)
         {
-            Friends friend1 = new Friends(userEmail, friendEmail);
-            Friends friend2 = new Friends(friendEmail, userEmail);
-            return _friendRepository.CreateFriend(friend1, friend2);
+            Friends friend = new Friends(userEmail, friendEmail);
+            if (_friendRepository.CreateFriend(friend))
+            {
+                friend = new Friends(friendEmail, userEmail);
+                return _friendRepository.CreateFriend(friend);
+            }
+            return false;
         }
 
         public IEnumerable<LogDto> GetUserLogs(string userEmail)

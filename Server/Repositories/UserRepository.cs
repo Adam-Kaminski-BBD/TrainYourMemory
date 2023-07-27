@@ -1,6 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Server.Models;
-using System.Reflection.Metadata;
 
 namespace Server.Repositories
 {
@@ -84,14 +83,13 @@ namespace Server.Repositories
 
         public IEnumerable<Friends> GetFriendsForUser(string userEmail)
         {
-            return _dataContext.Friends.Where(friend => friend.UserEmail == userEmail);
+            return _dataContext.Friends.Include("Friend").Where(friend => friend.UserEmail == userEmail);
         }
 
-        public bool CreateFriend(Friends friendOne, Friends friendTwo)
+        public bool CreateFriend(Friends friend)
         {
-            _dataContext.Friends.Add(friendOne);
-            _dataContext.Friends.Add(friendTwo);
-            return _dataContext.SaveChanges() == 2;
+            _dataContext.Friends.Add(friend);
+            return _dataContext.SaveChanges() == 1;
         }
     }
 
