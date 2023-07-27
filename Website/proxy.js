@@ -70,11 +70,11 @@ route.post('/user', urlencodedParser, async (req, res)=>{
 });
 
 route.get('/drinks', urlencodedParser, async (req, res)=>{
-  const token = req.headers['authorization'].split(' ')[1];
-
-  data['method'] = 'GET';
-  data['headers']['authorization'] = token;
+  
   try {
+    const token = req.headers['authorization'].split(' ')[1];
+    data['method'] = 'GET';
+    data['headers']['authorization'] = token;
     const outcome = await fetch(`${url}/drinks`);
     if(outcome.ok){
       const drinks = await outcome.json();
@@ -88,13 +88,12 @@ route.get('/drinks', urlencodedParser, async (req, res)=>{
   }
 });
 
-//just in case we need it somewhere
 route.get('/friends', urlencodedParser, async (req, res)=>{
   try {
     const token = req.headers['authorization'].split(' ')[1];
-
     data['method'] = 'GET';
     data['headers']['authorization'] = token;
+
     const outcome = await fetch(`${url}/friends`);
     if(outcome.ok){
       const friends = await outcome.json();
