@@ -12,7 +12,7 @@ const app = express();
 // Enable CORS for all routes
 app.use(cors());
 
-const dir = path.join(__dirname, './public/views');
+const dir = path.join(__dirname, './public/Views');
 // Static files
 fs.readdirSync('./public', {
   withFileTypes: true,
