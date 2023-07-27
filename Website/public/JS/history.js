@@ -1,9 +1,9 @@
 import * as Fn from './navbar.js';
+
 document.addEventListener('DOMContentLoaded',()=>{
   isVerified();
   populateHistory();
   menuSetup();
-
 });
 
 function menuSetup(){
@@ -18,24 +18,33 @@ function isVerified(){
 }
 
 async function populateHistory(){
-  
   try {
+    // request to api
+    //Test data
+
+    // Get from token in session or local storage
     const user = 'john@doe.com';
-    const response = await fetch(`/api/friends/${user}`);
-    let friends = [];
+    const response = await fetch(`/api/history/${user}`);
+    let history = [];
     if(response.ok){
-      friends = await response.json();
+      history = await response.json();
     }
     const tbody = document.getElementsByTagName('tbody')[0];
 
-    for (const friend of friends) {
+    for(let i = 0; i < history.length; i++){
+      // create tr and td for each key in the object
       const tr = document.createElement('tr');
-      const td = document.createElement('td');
-      td.innerText = friend;
-      tr.appendChild(td);
+      const keys = Object.keys(history[i]);
+      keys.forEach(key=>{
+        const td = document.createElement('td');
+        td.innerText = history[i][key];
+        tr.appendChild(td);
+      });
+
       tbody.appendChild(tr);
     }
   } catch (error) {
     alert(error);
   }
+
 }

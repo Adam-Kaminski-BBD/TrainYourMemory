@@ -1,9 +1,9 @@
 import * as Fn from './navbar.js';
+
 document.addEventListener('DOMContentLoaded',()=>{
   isVerified();
   populateHistory();
   menuSetup();
-
 });
 
 function menuSetup(){
@@ -16,22 +16,20 @@ function menuSetup(){
 function isVerified(){
   console.log('You got tokens bro?');
 }
-
 async function populateHistory(){
-  
   try {
     const user = 'john@doe.com';
-    const response = await fetch(`/api/friends/${user}`);
-    let friends = [];
+    const response = await fetch(`/api/locations/${user}`);
+    let locations = [];
     if(response.ok){
-      friends = await response.json();
+      locations = await response.json();
     }
     const tbody = document.getElementsByTagName('tbody')[0];
 
-    for (const friend of friends) {
+    for (const location of locations) {
       const tr = document.createElement('tr');
       const td = document.createElement('td');
-      td.innerText = friend;
+      td.innerText = location;
       tr.appendChild(td);
       tbody.appendChild(tr);
     }

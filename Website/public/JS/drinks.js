@@ -3,7 +3,6 @@ document.addEventListener('DOMContentLoaded',()=>{
   isVerified();
   populateHistory();
   menuSetup();
-
 });
 
 function menuSetup(){
@@ -18,24 +17,24 @@ function isVerified(){
 }
 
 async function populateHistory(){
-  
   try {
     const user = 'john@doe.com';
-    const response = await fetch(`/api/friends/${user}`);
-    let friends = [];
+    const response = await fetch(`/api/drinks/${user}`);
+    let drinks = [];
     if(response.ok){
-      friends = await response.json();
+      drinks = await response.json();
     }
     const tbody = document.getElementsByTagName('tbody')[0];
 
-    for (const friend of friends) {
+    for (const drink of drinks) {
       const tr = document.createElement('tr');
       const td = document.createElement('td');
-      td.innerText = friend;
+      td.innerText = drink;
       tr.appendChild(td);
       tbody.appendChild(tr);
     }
   } catch (error) {
     alert(error);
   }
+
 }
