@@ -30,6 +30,7 @@ passport.use(new GoogleStrategy({
   callbackURL: '/dashboard', 
 },
 (accessToken, refreshToken, profile, done) => {
+  profile['token'] = accessToken;
   done(null, profile);
 }));
 
@@ -42,14 +43,6 @@ passport.deserializeUser((user, done) => {
   // Example: User.findById(id, (err, user) => done(err, user));
   done(null, user);
 });
-
-// function isUserAuthenticated(req, res, next) {
-//   if (req.user) {
-//     next();
-//   } else {
-//     res.send('You must login!');
-//   }
-// }
 
 const dir = path.join(__dirname, './public/Views');
 // Static files

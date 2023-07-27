@@ -47,8 +47,20 @@ async function populateHistory(){
 
 async function populateTopDrink(){
   try {
-    const user = 'john@doe.com';
-    const response = await fetch(`/api/drink/top/${user}`);
+
+    const userCheck = await fetch('/api/user');
+    const userInfo = await userCheck.json();
+
+    const user = userInfo.id;
+    const token = userInfo.token;
+    const data = {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + token
+      },
+    };
+    const response = await fetch(`/api/drink/top/${user}`, data);
     if(response.ok){
       const drink = document.getElementById('drink');
       drink.textContent = response.drink;    }

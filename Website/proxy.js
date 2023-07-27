@@ -12,7 +12,7 @@ route.use(bodyParser.urlencoded({
 }));
 
 // C# API server
-const url = 'http://localhost:8080';
+const url = 'http://localhost:7166';
 const data = {
   method: 'POST',
   headers: {
@@ -109,8 +109,12 @@ route.get('/friends', urlencodedParser, async (req, res)=>{
 route.get('/drink/top/:user', urlencodedParser, async (req, res)=>{
   try {
     const user = req.params.user;
+    const token = req.headers['authorization'].split(' ')[1];
+
+    data['method'] = 'GET';
+    data['headers']['authorization'] = token;
     // C# API
-    const outcome = await fetch(`${url}/entry/${user}`);
+    const outcome = await fetch(`${url}/entry/${user}`, data);
     if(outcome.ok){
       res.status(200).send('All good!');
     }else{
@@ -276,6 +280,17 @@ route.get('/history/:user', urlencodedParser, async (req, res)=>{
 
   } catch (error) {
     res.status(400).send('Invalid request');
+  }
+});
+
+route.get('/user', (req, res)=>{
+  if(req.isAuthenticated()){
+    res.status(200).send({
+      id: req.user.id,
+      token: req.user.token
+    });
+  }else{
+    res.status(400).send('Invalid');
   }
 });
 
