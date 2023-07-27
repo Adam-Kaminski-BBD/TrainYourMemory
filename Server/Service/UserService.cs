@@ -39,15 +39,11 @@ namespace Server.Service
             return _friendRepository.GetFriendsForUser(userEmail).Select(friend => friend.Friend).Where(user => user != null);
         }
 
-        public bool CreateFriend(string userEmail, string friendEmail)
+        public bool CreateFriend(string userId, FriendRequestObject friendRequestObject)
         {
-            Friends friend = new Friends(userEmail, friendEmail);
-            if (_friendRepository.CreateFriend(friend))
-            {
-                friend = new Friends(friendEmail, userEmail);
-                return _friendRepository.CreateFriend(friend);
-            }
-            return false;
+            Friends friend = new Friends(userId, friendRequestObject.UserId);
+            Friends reverseFriend = new Friends(friendRequestObject.UserId, userId);
+            return _friendRepository.CreateFriend(friend) && _friendRepository.CreateFriend(reverseFriend);
         }
 
         public IEnumerable<LogDto> GetUserLogs(string userEmail)
@@ -70,10 +66,6 @@ namespace Server.Service
                 Console.WriteLine("WE ARE HERE");
                 return new TopInformation();
             }
-            Console.WriteLine("THERR IS SOMEWTHING \n\n\n");
-            Console.WriteLine(GetTopDrink(userLogs));
-            Console.WriteLine(GetTopLocation(userLogs));
-            Console.WriteLine(GetMoneySpent(userLogs));
             return new TopInformation(GetTopDrink(userLogs), GetTopLocation(userLogs), GetMoneySpent(userLogs));
         }
 

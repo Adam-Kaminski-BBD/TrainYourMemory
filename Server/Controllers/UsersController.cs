@@ -41,10 +41,10 @@ namespace Server.Controllers
             return _userService.GetUsersFriends(id);
         }
 
-        [HttpPost("{userId}/friends/{friendId}")]
-        public IActionResult PostFriend(string userId, string friendId)
+        [HttpPost("{userId}/friends")]
+        public IActionResult PostFriend(string userId, FriendRequestObject friend)
         {
-            return _userService.CreateFriend(userId, friendId) ? new EmptyResult() : BadRequest();
+            return _userService.CreateFriend(userId, friend) ? new EmptyResult() : BadRequest();
         }
 
         [HttpGet("{id}/logs")]
