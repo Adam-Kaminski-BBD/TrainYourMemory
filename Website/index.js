@@ -68,12 +68,20 @@ app.get('/', (req, res)=>{
   res.sendFile(path.join(dir, './login.html'));
 });
 
+function checkAuthenticated(req, res, next) {
+  if (req.isAuthenticated()) {
+    next();
+  }else{
+    res.status(400).send('Invalid Request');
+  }
+}
+
 // All other screens require middleware validation, and this token can be used for validation on API
 
 app.get('/dashboard', passport.authenticate('google', {
   failureRedirect: '/',
   scope: ['email', 'profile']
-}), (req, res) => {
+}), checkAuthenticated, (req, res) => {
   res.redirect('/home');
 });
 
