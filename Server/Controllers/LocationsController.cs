@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Server.Auth;
 using Server.Models.RequestObjects;
 using Server.Service;
 
@@ -16,12 +17,14 @@ namespace Server.Controllers
         }
 
         [HttpGet]
+        [CustomAuth]
         public IActionResult GetAllLocations()
         {
             return new JsonResult(_locationsService.GetAllLocations());
         }
 
         [HttpPost]
+        [CustomAuth]
         public IActionResult CreateLocation(LocationsRequestObject name)
         {
             return _locationsService.CreateLocation(name) ? new EmptyResult() : BadRequest();

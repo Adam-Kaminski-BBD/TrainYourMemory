@@ -19,10 +19,5 @@
             Location = "";
             MoneySpent = 0;
         }
-
-        public string ToString()
-        {
-            return "{" + Drink + "," + Location + "," + MoneySpent + "}";
-        }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Server.Auth;
 using Server.Models.RequestObjects;
 using Server.Service;
 
@@ -18,12 +19,14 @@ namespace Server.Controllers
         }
 
         [HttpGet]
+        [CustomAuth]
         public IActionResult GetAllDrinks()
         {
             return new JsonResult(_drinksService.GetAllDrinks());
         }
 
         [HttpPost]
+        [CustomAuth]
         public IActionResult CreateDrink(DrinksRequestObject drink)
         {
             return _drinksService.CreateDrink(drink) ? new EmptyResult() : BadRequest();
