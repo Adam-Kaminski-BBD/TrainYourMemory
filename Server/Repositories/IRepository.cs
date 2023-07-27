@@ -33,14 +33,14 @@ namespace Server.Repositories
 
     public interface IFriendRepository: IRepository
     {
-        public IEnumerable<Friends> GetFriendsForUser(int userId);
+        public IEnumerable<Friends> GetFriendsForUser(string userEmail);
         public bool CreateFriend(Friends friendOne, Friends friendTwo);
        
     }
 
     public interface ILogRepository: IRepository
     {
-        public IEnumerable<Log> GetLogsForUser(int userId);
+        public IEnumerable<Log> GetLogsForUser(string userEmail);
         public bool CreateLog(Log log);
        
     }

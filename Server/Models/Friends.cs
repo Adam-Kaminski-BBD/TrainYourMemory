@@ -4,25 +4,25 @@
     {
 
         public int Id { get; set; }
-        public int UserId { get; set; }
+        public string UserEmail { get; set; }
         public User User { get; set; }  
-        public int FriendId { get; set; }
+        public string FriendEmail { get; set; }
         public User Friend { get; set; }
 
-        public Friends(int id, int userId, User user, int friendId, User friend)
+        public Friends(int id, string userEmail, User user, string friendEmail, User friend)
         {
             Id = id;
-            UserId = userId;
+            UserEmail = userEmail;
             User = user;
-            FriendId = friendId;
+            FriendEmail = friendEmail;
             Friend = friend;
         }
 
-        public Friends(int userId, int friendId)
+        public Friends(string userEmail, string friendEmail)
         {
             Id = 0;
-            UserId = userId;
-            FriendId = friendId;
+            UserEmail = userEmail;
+            FriendEmail = friendEmail;
             User = new User();
             Friend = new User();
         }

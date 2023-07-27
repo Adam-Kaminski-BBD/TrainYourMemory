@@ -81,9 +81,9 @@ namespace Server.Repositories
             _dataContext = dataContext;
         }
 
-        public IEnumerable<Friends> GetFriendsForUser(int userId)
+        public IEnumerable<Friends> GetFriendsForUser(string userEmail)
         {
-            return _dataContext.Friends.Where(friend => friend.UserId == userId);
+            return _dataContext.Friends.Where(friend => friend.UserEmail == userEmail);
         }
 
         public bool CreateFriend(Friends friendOne, Friends friendTwo)
@@ -103,9 +103,9 @@ namespace Server.Repositories
             _dataContext = dataContext;
         }
 
-        public IEnumerable<Log> GetLogsForUser(int userId)
+        public IEnumerable<Log> GetLogsForUser(string userEmail)
         {
-            return _dataContext.Logs.Include("User").Include("Location").Include("Drink").Where(log => log.UserId == userId);
+            return _dataContext.Logs.Include("User").Include("Location").Include("Drink").Where(log => log.UserEmail == userEmail);
         }
 
         public bool CreateLog(Log log)

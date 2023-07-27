@@ -18,10 +18,9 @@ namespace Server.Service
             _logRepository = logRepository;
         }
 
-        public bool CreateUser(UserRequestObject userRequest)
+        public bool CreateUser(User user)
         {
-            User entity = new User(userRequest.Email, userRequest.Name);
-            return _userRepository.CreateUser(entity);
+            return _userRepository.CreateUser(user);
         }
 
         public User? GetUserById(int id)
@@ -34,27 +33,27 @@ namespace Server.Service
             return _userRepository.GetUserByEmail(email);
         }
 
-        public IEnumerable<User> GetUsersFriends(int userId)
+        public IEnumerable<User> GetUsersFriends(string userEmail)
         {
-            return _friendRepository.GetFriendsForUser(userId).Select(friend => friend.Friend);
+            return _friendRepository.GetFriendsForUser(userEmail).Select(friend => friend.Friend);
         }
 
-        public bool CreateFriend(int userId, int friendId)
+        public bool CreateFriend(string userEmail, string friendEmail)
         {
-            Friends friend1 = new Friends(userId, friendId);
-            Friends friend2 = new Friends(friendId, userId);
+            Friends friend1 = new Friends(userEmail, friendEmail);
+            Friends friend2 = new Friends(friendEmail, userEmail);
             return _friendRepository.CreateFriend(friend1, friend2);
         }
 
-        public IEnumerable<LogDto> GetUserLogs(int userId)
+        public IEnumerable<LogDto> GetUserLogs(string userEmail)
         {
-            IEnumerable<Log> logs = _logRepository.GetLogsForUser(userId);
+            IEnumerable<Log> logs = _logRepository.GetLogsForUser(userEmail);
             return logs.Select(ConvertLogToLogDto);
         }
 
-        public bool CreateLog(int userId, LogEntry log) 
+        public bool CreateLog(string userEmail, LogEntry log) 
         {
-            Log entity = new Log(log.Date, log.Quantity, log.Price, userId, log.LocationId, log.DrinkId);
+            Log entity = new Log(log.Date, log.Quantity, log.Price, userEmail, log.LocationId, log.DrinkId);
             return _logRepository.CreateLog(entity);
         }
 

@@ -1,6 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Server.Models;
-using Server.Models.RequestObjects;
 using Server.Service;
 
 namespace Server.Controllers
@@ -26,7 +25,7 @@ namespace Server.Controllers
         }
 
         [HttpPost]
-        public IActionResult PostUser(UserRequestObject user)
+        public IActionResult PostUser(User user)
         {
             if (user == null || user.Name == null || user.Email == null)
             {
@@ -36,27 +35,27 @@ namespace Server.Controllers
         }
 
         [HttpGet("{email}/friends")]
-        public IEnumerable<User> GetFriends(int userId)
+        public IEnumerable<User> GetFriends(string email)
         {
-            return _userService.GetUsersFriends(userId);
+            return _userService.GetUsersFriends(email);
         }
 
-        [HttpPost("{userId}/friends/{friendId}")]
-        public IActionResult PostFriend(int userId, int friendId)
+        [HttpPost("{userEmail}/friends/{friendEmail}")]
+        public IActionResult PostFriend(string userEmail, string friendEmail)
         {
-            return _userService.CreateFriend(userId, friendId) ? new EmptyResult() : BadRequest();
+            return _userService.CreateFriend(userEmail, friendEmail) ? new EmptyResult() : BadRequest();
         }
 
-        [HttpGet("{userId}/logs")]
-        public IActionResult GetUserLogs(int userId)
+        [HttpGet("{email}/logs")]
+        public IActionResult GetUserLogs(string email)
         {
-            return new JsonResult(_userService.GetUserLogs(userId));
+            return new JsonResult(_userService.GetUserLogs(email));
         }
 
-        [HttpPost("{userId}/logs")]
-        public IActionResult LogDrinks(int userId, LogEntry log)
+        [HttpPost("{email}/logs")]
+        public IActionResult LogDrinks(string email, LogEntry log)
         {
-            return _userService.CreateLog(userId, log) ? new EmptyResult() : BadRequest();
+            return _userService.CreateLog(email, log) ? new EmptyResult() : BadRequest();
         }
     }
 }
