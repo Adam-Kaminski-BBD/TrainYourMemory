@@ -89,7 +89,7 @@ export function showFaQ() {
   window.location.href = '/FAQ';
 }
 export function showHome() {
-  window.location.href = '/dashboard';
+  window.location.href = '/home';
 }
 
 
