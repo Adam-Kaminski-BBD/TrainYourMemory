@@ -131,7 +131,7 @@ async function populateSpending(){
     const response = await fetch(`/api/spend/${user}`, data);
     if(response.ok){
       const spend = document.getElementById('spend');
-      spend.textContent =  `R${response.amount}`;
+      spend.textContent =  `R${response.amount??0}`;
     }
   } catch (error) {
     alert(error);

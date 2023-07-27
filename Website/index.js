@@ -7,9 +7,12 @@ const passport = require('passport');
 const GoogleStrategy = require('passport-google-oauth20').Strategy;
 const session = require('express-session'); // Added this line for session management
 const cors = require('cors');
+const fetch = (...args) => import('node-fetch').then(({ default: fetch }) => fetch(...args));
+
 
 require('dotenv').config();
-
+const https = require('https'); // Disable SSL certificate verification (only for development/testing) const agent = new https.Agent({ rejectUnauthorized: false });
+const agent = new https.Agent({ rejectUnauthorized: false });
 const app = express();
 
 // Enable CORS for all routes
@@ -82,8 +85,20 @@ app.get('/dashboard', passport.authenticate('google', {
   res.redirect('/home');
 });
 
-app.get('/home', (req, res) => {
+app.get('/home', async (req, res) => {
   if (req.isAuthenticated()) {
+    const data = {
+      method:'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        id: req.user.id,
+        name: req.user.displayName
+      }),
+      agent
+    }; 
+    await fetch('https://mxys3k3gzm.eu-west-1.awsapprunner.com/users', data);
     res.sendFile(path.join(dir, './dashboard.html'));
   } else {
     res.redirect('/');
