@@ -27,20 +27,23 @@ app.use(passport.session());
 passport.use(new GoogleStrategy({
   clientID: process.env.CLIENTID,
   clientSecret: process.env.CLIENTSECRET,
-  callbackURL: '/dashboard', 
+  callbackURL: '/dashboard', // Replace with the correct callback URL
 },
 (accessToken, refreshToken, profile, done) => {
   done(null, profile);
 }));
 
 passport.serializeUser((user, done) => {
-  done(null, user);
+  done(null, user.id);
 });
 
-passport.deserializeUser((user, done) => {
+passport.deserializeUser((id, name, done) => {
   // Replace this example logic with your actual user retrieval logic.
   // Example: User.findById(id, (err, user) => done(err, user));
-  done(null, user);
+  done(null, {
+    id: id,
+    name: name 
+  });
 });
 
 // function isUserAuthenticated(req, res, next) {
@@ -70,74 +73,42 @@ app.get('/', (req, res)=>{
 });
 
 // All other screens require middleware validation, and this token can be used for validation on API
-
 app.get('/dashboard', passport.authenticate('google', {
   failureRedirect: '/',
   scope: ['email', 'profile']
-}), (req, res) => {
-  res.redirect('/home');
-});
-
-app.get('/home', (req, res) => {
-  if (req.isAuthenticated()) {
-    res.sendFile(path.join(dir, './dashboard.html'));
-  } else {
-    res.redirect('/');
-  }
+}), (req, res)=>{
+  // home page
+  res.sendFile(path.join(dir, './dashboard.html'));
 });
 
 app.get('/friends', (req, res)=>{
   // list of the homies
-  if (req.isAuthenticated()) {
-    res.sendFile(path.join(dir, './friends.html'));
-  } else {
-    res.redirect('/');
-  }
+  res.sendFile(path.join(dir, './friends.html'));
 });
 
 app.get('/locations', (req, res)=>{
-  if (req.isAuthenticated()) {
   // list of the homies
-    res.sendFile(path.join(dir, './locations.html'));
-  } else {
-    res.redirect('/');
-  }
+  res.sendFile(path.join(dir, './locations.html'));
 });
 
-app.get('/drinks', (req, res) => {
-  if (req.isAuthenticated()){
-    // list of the homies
-    res.sendFile(path.join(dir, './drinks.html'));
-  } else {
-    res.redirect('/');
-  }
+app.get('/drinks', (req, res)=>{
+  // list of the homies
+  res.sendFile(path.join(dir, './drinks.html'));
 });
 
-app.get('/history', (req, res) => {
-  if (req.isAuthenticated()) {
-    // list of the homies
-    res.sendFile(path.join(dir, './history.html'));
-  } else {
-    res.redirect('/');
-  }
+app.get('/history', (req, res)=>{
+  // list of the homies
+  res.sendFile(path.join(dir, './history.html'));
 });
 
-app.get('/entry', (req, res) => {
-  if (req.isAuthenticated()) {
-    // Enter drink etc.
-    res.sendFile(path.join(dir, './entry.html'));
-  } else {
-    res.redirect('/');
-  }
+app.get('/entry', (req, res)=>{
+  // Enter drink etc.
+  res.sendFile(path.join(dir, './entry.html'));
 });
 
-app.get('/FAQ', (req, res) => {
-  if (req.isAuthenticated()) {
-    // list of the homies
-    res.sendFile(path.join(dir, './FAQ.html'));
-  } else {
-    res.redirect('/');
-  }
+app.get('/FAQ', (req, res)=>{
+  // list of the homies
+  res.sendFile(path.join(dir, './FAQ.html'));
 });
 
 app.get('/auth/google', passport.authenticate('google', {
