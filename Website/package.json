@@ -4,7 +4,9 @@
   "description": "See how well you remember where you went and what you had to drink",
   "main": "index.js",
   "scripts": {
-    "server": "nodemon index.js"
+    "server": "nodemon index.js",
+    "start": "node index.js",
+    "build": "npm install && npm install cors --save"
   },
   "dependencies": {
     "body-parser": "^1.20.2",
