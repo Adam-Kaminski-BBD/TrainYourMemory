@@ -57,5 +57,11 @@ namespace Server.Controllers
         {
             return _userService.CreateLog(email, log) ? new EmptyResult() : BadRequest();
         }
+
+        [HttpGet("{email}/logs/top")]
+        public IActionResult GetTopDrink(string email)
+        {
+            return new JsonResult(_userService.GetTopInformation(email));
+        }
     }
 }

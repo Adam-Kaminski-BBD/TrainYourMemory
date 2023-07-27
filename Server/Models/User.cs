@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
+﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Text.Json.Serialization;
 
 namespace Server.Models
@@ -29,6 +30,7 @@ namespace Server.Models
         }
         [JsonIgnore]
         public int Id {  get; set; }
+        [Key]
         public string Email { get; set; }
         public string Name { get; set; }
 

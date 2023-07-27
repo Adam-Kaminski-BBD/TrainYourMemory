@@ -1,6 +1,6 @@
-﻿using Server.Models;
+﻿using Microsoft.IdentityModel.Tokens;
+using Server.Models;
 using Server.Models.DTO;
-using Server.Models.RequestObjects;
 using Server.Repositories;
 
 namespace Server.Service
@@ -55,6 +55,33 @@ namespace Server.Service
         {
             Log entity = new Log(log.Date, log.Quantity, log.Price, userEmail, log.LocationId, log.DrinkId);
             return _logRepository.CreateLog(entity);
+        }
+
+        public TopInformation GetTopInformation(string userEmail)
+        {
+            IEnumerable<Log> userLogs = _logRepository.GetLogsForUser(userEmail);
+            if (userLogs.IsNullOrEmpty())
+            {
+                return new TopInformation();
+            }
+            return new TopInformation(GetTopDrink(userLogs), GetTopLocation(userLogs), GetMoneySpent(userLogs));
+        }
+
+        public Drink? GetTopDrink(IEnumerable<Log> userLogs)
+        {
+            var lookup = userLogs.Select(log => (log.Drink, log.Quantity)).ToLookup(x => x.Item1);
+            return lookup.Select(x => (x.Key, lookup[x.Key].Select(tuple => tuple.Item2).Sum())).OrderByDescending(x => x.Item2).Select(x => x.Key).First();
+        }
+
+        public Location? GetTopLocation(IEnumerable<Log> userLogs)
+        {
+            var lookup = userLogs.Select(log => (log.Location, 1)).ToLookup(x => x.Item1);
+            return lookup.Select(x => (x.Key, lookup[x.Key].Select(tuple => tuple.Item2).Sum())).OrderByDescending(x => x.Item2).Select(x => x.Key).First();
+        }
+
+        public decimal GetMoneySpent(IEnumerable<Log> userLogs) 
+        {
+            return userLogs.Select(log => log.Price).DefaultIfEmpty(0).Sum();
         }
 
         private LogDto ConvertLogToLogDto(Log log)

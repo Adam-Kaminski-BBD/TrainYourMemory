@@ -9,8 +9,8 @@ namespace Server.Models
         public DateTime Date { get; set; }
         public int Quantity { get; set; }
         public decimal Price { get; set; }
-
         public string UserEmail { get; set; }
+        [ForeignKey("UserEmail")]
         public User User { get; set; }
         public int LocationId { get; set; }
         public Location Location { get; set; }
