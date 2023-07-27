@@ -86,23 +86,28 @@ app.get('/dashboard', passport.authenticate('google', {
 });
 
 app.get('/home', async (req, res) => {
-  if (req.isAuthenticated()) {
-    const data = {
-      method:'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        id: req.user.id,
-        name: req.user.displayName
-      }),
-      agent
-    }; 
-    await fetch('https://mxys3k3gzm.eu-west-1.awsapprunner.com/users', data);
-    res.sendFile(path.join(dir, './dashboard.html'));
-  } else {
-    res.redirect('/');
+  try {
+    if (req.isAuthenticated()) {
+      const data = {
+        method:'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          id: req.user.id,
+          name: req.user.displayName
+        }),
+        agent
+      }; 
+      await fetch('https://mxys3k3gzm.eu-west-1.awsapprunner.com/users', data);
+      res.sendFile(path.join(dir, './dashboard.html'));
+    } else {
+      res.redirect('/');
+    }
+  } catch (error) {
+    console.log("Sorry");
   }
+  
 });
 
 app.get('/friends', (req, res)=>{
