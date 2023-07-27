@@ -13,7 +13,7 @@ route.use(bodyParser.urlencoded({
 }));
 
 // C# API server
-const url = 'https://localhost:7166';
+const url = 'https://mxys3k3gzm.eu-west-1.awsapprunner.com/';
 const data = {
   method: 'POST',
   headers: {

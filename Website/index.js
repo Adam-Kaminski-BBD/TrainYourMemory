@@ -98,7 +98,7 @@ app.get('/home', async (req, res) => {
       }),
       agent
     }; 
-    await fetch('https://localhost:7166/users', data);
+    await fetch('https://mxys3k3gzm.eu-west-1.awsapprunner.com/users', data);
     res.sendFile(path.join(dir, './dashboard.html'));
   } else {
     res.redirect('/');
