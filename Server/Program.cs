@@ -2,7 +2,7 @@ using Server.Repositories;
 using Server.Service;
 
 var builder = WebApplication.CreateBuilder(args);
-
+builder.Configuration.AddEnvironmentVariables();
 // Add services to the container.
 builder.Services.AddSingleton<DataContext, DataContext>();
 builder.Services.AddSingleton<IUserRepository, UserRepository>();
