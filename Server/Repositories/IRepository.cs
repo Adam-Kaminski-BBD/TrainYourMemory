@@ -8,8 +8,7 @@ namespace Server.Repositories
 
     public interface IUserRepository : IRepository
     {
-        public User? GetUserById(int id);
-        public User? GetUserByEmail(string email);
+        public User? GetUserById(string id);
         public bool CreateUser(User user);
     }
 
@@ -33,14 +32,14 @@ namespace Server.Repositories
 
     public interface IFriendRepository: IRepository
     {
-        public IEnumerable<Friends> GetFriendsForUser(string userEmail);
-        public bool CreateFriend(Friends friendOne, Friends friendTwo);
+        public IEnumerable<Friends> GetFriendsForUser(string id);
+        public bool CreateFriend(Friends friend);
        
     }
 
     public interface ILogRepository: IRepository
     {
-        public IEnumerable<Log> GetLogsForUser(string userEmail);
+        public IEnumerable<Log> GetLogsForUser(string id);
         public bool CreateLog(Log log);
        
     }

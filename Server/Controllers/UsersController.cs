@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Server.Models;
+using Server.Models.RequestObjects;
 using Server.Service;
 
 namespace Server.Controllers
@@ -16,10 +17,10 @@ namespace Server.Controllers
             _userService = userService;
         }
 
-        [HttpGet("{email}")]
-        public IActionResult GetUserById(string email)
+        [HttpGet("{id}")]
+        public IActionResult GetUserById(string id)
         {
-            User? user = _userService.GetUserByEmail(email);
+            User? user = _userService.GetUserByEmail(id);
             if (user == null) { return NotFound(); }
             return new JsonResult(user);
         }
@@ -27,35 +28,42 @@ namespace Server.Controllers
         [HttpPost]
         public IActionResult PostUser(User user)
         {
-            if (user == null || user.Name == null || user.Email == null)
+            if (user == null || user.Name == null || user.Id == null)
             {
                 return BadRequest("Must supply a name and a valid email address");
             }
             return _userService.CreateUser(user) ? new EmptyResult() : BadRequest();
         }
 
-        [HttpGet("{email}/friends")]
-        public IEnumerable<User> GetFriends(string email)
+        [HttpGet("{id}/friends")]
+        public IEnumerable<User> GetFriends(string id)
         {
-            return _userService.GetUsersFriends(email);
+            return _userService.GetUsersFriends(id);
         }
 
-        [HttpPost("{userEmail}/friends/{friendEmail}")]
-        public IActionResult PostFriend(string userEmail, string friendEmail)
+        [HttpPost("{userId}/friends")]
+        public IActionResult PostFriend(string userId, FriendRequestObject friend)
         {
-            return _userService.CreateFriend(userEmail, friendEmail) ? new EmptyResult() : BadRequest();
+            return _userService.CreateFriend(userId, friend) ? new EmptyResult() : BadRequest();
         }
 
-        [HttpGet("{email}/logs")]
-        public IActionResult GetUserLogs(string email)
+        [HttpGet("{id}/logs")]
+        public IActionResult GetUserLogs(string id)
         {
-            return new JsonResult(_userService.GetUserLogs(email));
+            return new JsonResult(_userService.GetUserLogs(id));
         }
 
-        [HttpPost("{email}/logs")]
-        public IActionResult LogDrinks(string email, LogEntry log)
+        [HttpPost("{id}/logs")]
+        public IActionResult LogDrinks(string id, LogEntry log)
         {
-            return _userService.CreateLog(email, log) ? new EmptyResult() : BadRequest();
+            return _userService.CreateLog(id, log) ? new EmptyResult() : BadRequest();
+        }
+
+        [HttpGet("{id}/logs/top")]
+        public IActionResult GetTopDrink(string id)
+        {
+            TopInformation information = _userService.GetTopInformation(id);
+            return new JsonResult(information);
         }
     }
 }

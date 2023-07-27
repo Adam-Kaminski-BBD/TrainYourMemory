@@ -1,30 +1,31 @@
-﻿namespace Server.Models
+﻿using System.ComponentModel.DataAnnotations.Schema;
+
+namespace Server.Models
 {
     public class Friends
     {
 
         public int Id { get; set; }
-        public string UserEmail { get; set; }
-        public User User { get; set; }  
-        public string FriendEmail { get; set; }
-        public User Friend { get; set; }
+        [ForeignKey("user")]
+        public string UserId { get; set; }
+        public User? User { get; set; }
+        public string FriendId { get; set; }
+        public User? Friend { get; set; }
 
-        public Friends(int id, string userEmail, User user, string friendEmail, User friend)
+        public Friends(int id, string userId, User user, string friendId, User friend)
         {
             Id = id;
-            UserEmail = userEmail;
+            UserId = userId;
             User = user;
-            FriendEmail = friendEmail;
+            FriendId = friendId;
             Friend = friend;
         }
 
-        public Friends(string userEmail, string friendEmail)
+        public Friends(string userId, string friendId)
         {
             Id = 0;
-            UserEmail = userEmail;
-            FriendEmail = friendEmail;
-            User = new User();
-            Friend = new User();
+            UserId = userId;
+            FriendId = friendId;
         }
     }
 }

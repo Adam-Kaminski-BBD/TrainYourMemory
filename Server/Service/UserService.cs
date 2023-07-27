@@ -1,4 +1,5 @@
-﻿using Server.Models;
+﻿using Microsoft.IdentityModel.Tokens;
+using Server.Models;
 using Server.Models.DTO;
 using Server.Models.RequestObjects;
 using Server.Repositories;
@@ -23,26 +24,26 @@ namespace Server.Service
             return _userRepository.CreateUser(user);
         }
 
-        public User? GetUserById(int id)
+        public User? GetUserById(string id)
         {
             return _userRepository.GetUserById(id);
         }
 
         public User? GetUserByEmail(string email)
         {
-            return _userRepository.GetUserByEmail(email);
+            return _userRepository.GetUserById(email);
         }
 
         public IEnumerable<User> GetUsersFriends(string userEmail)
         {
-            return _friendRepository.GetFriendsForUser(userEmail).Select(friend => friend.Friend);
+            return _friendRepository.GetFriendsForUser(userEmail).Select(friend => friend.Friend).Where(user => user != null);
         }
 
-        public bool CreateFriend(string userEmail, string friendEmail)
+        public bool CreateFriend(string userId, FriendRequestObject friendRequestObject)
         {
-            Friends friend1 = new Friends(userEmail, friendEmail);
-            Friends friend2 = new Friends(friendEmail, userEmail);
-            return _friendRepository.CreateFriend(friend1, friend2);
+            Friends friend = new Friends(userId, friendRequestObject.UserId);
+            Friends reverseFriend = new Friends(friendRequestObject.UserId, userId);
+            return _friendRepository.CreateFriend(friend) && _friendRepository.CreateFriend(reverseFriend);
         }
 
         public IEnumerable<LogDto> GetUserLogs(string userEmail)
@@ -55,6 +56,34 @@ namespace Server.Service
         {
             Log entity = new Log(log.Date, log.Quantity, log.Price, userEmail, log.LocationId, log.DrinkId);
             return _logRepository.CreateLog(entity);
+        }
+
+        public TopInformation GetTopInformation(string userEmail)
+        {
+            IEnumerable<Log> userLogs = _logRepository.GetLogsForUser(userEmail);
+            if (userLogs.IsNullOrEmpty())
+            {
+                Console.WriteLine("WE ARE HERE");
+                return new TopInformation();
+            }
+            return new TopInformation(GetTopDrink(userLogs), GetTopLocation(userLogs), GetMoneySpent(userLogs));
+        }
+
+        public Drink? GetTopDrink(IEnumerable<Log> userLogs)
+        {
+            var lookup = userLogs.Select(log => (log.Drink, log.Quantity)).ToLookup(x => x.Item1);
+            return lookup.Select(x => (x.Key, lookup[x.Key].Select(tuple => tuple.Item2).Sum())).OrderByDescending(x => x.Item2).Select(x => x.Key).First();
+        }
+
+        public Location? GetTopLocation(IEnumerable<Log> userLogs)
+        {
+            var lookup = userLogs.Select(log => (log.Location, 1)).ToLookup(x => x.Item1);
+            return lookup.Select(x => (x.Key, lookup[x.Key].Select(tuple => tuple.Item2).Sum())).OrderByDescending(x => x.Item2).Select(x => x.Key).First();
+        }
+
+        public decimal GetMoneySpent(IEnumerable<Log> userLogs) 
+        {
+            return userLogs.Select(log => log.Price).DefaultIfEmpty(0).Sum();
         }
 
         private LogDto ConvertLogToLogDto(Log log)

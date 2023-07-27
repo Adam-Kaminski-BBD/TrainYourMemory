@@ -1,5 +1,4 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
 using Server.Models;
 
 namespace Server.Repositories
@@ -13,14 +12,9 @@ namespace Server.Repositories
             _dataContext = dataContext;
         }
 
-        public User? GetUserById(int id)
+        public User? GetUserById(string id)
         {
             return _dataContext.Users.Where(user => user.Id == id).FirstOrDefault();
-        }
-
-        public User? GetUserByEmail(string email)
-        {
-            return _dataContext.Users.Where(user => user.Email == email).FirstOrDefault();
         }
 
         public bool CreateUser(User user)
@@ -82,16 +76,15 @@ namespace Server.Repositories
             _dataContext = dataContext;
         }
 
-        public IEnumerable<Friends> GetFriendsForUser(string userEmail)
+        public IEnumerable<Friends> GetFriendsForUser(string userId)
         {
-            return _dataContext.Friends.Where(friend => friend.UserEmail == userEmail);
+            return _dataContext.Friends.Include("Friend").Where(friend => friend.UserId == userId);
         }
 
-        public bool CreateFriend(Friends friendOne, Friends friendTwo)
+        public bool CreateFriend(Friends friend)
         {
-            _dataContext.Friends.Add(friendOne);
-            _dataContext.Friends.Add(friendTwo);
-            return _dataContext.SaveChanges() == 2;
+            _dataContext.Friends.Add(friend);
+            return _dataContext.SaveChanges() == 1;
         }
     }
 
@@ -104,9 +97,9 @@ namespace Server.Repositories
             _dataContext = dataContext;
         }
 
-        public IEnumerable<Log> GetLogsForUser(string userEmail)
+        public IEnumerable<Log> GetLogsForUser(string id)
         {
-            return _dataContext.Logs.Include("User").Include("Location").Include("Drink").Where(log => log.UserEmail == userEmail);
+            return _dataContext.Logs.Include("User").Include("Location").Include("Drink").Where(log => log.UserId == id);
         }
 
         public bool CreateLog(Log log)
