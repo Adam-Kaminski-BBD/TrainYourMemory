@@ -69,13 +69,13 @@ route.post('/user', urlencodedParser, async (req, res)=>{
   }
 });
 
-route.get('/drinks', urlencodedParser, async (req, res)=>{
+route.get('/drinks', urlencodedParser, checkAuthenticated, async (req, res)=>{
   
   try {
     const token = req.headers['authorization'].split(' ')[1];
     data['method'] = 'GET';
     data['headers']['authorization'] = token;
-    const outcome = await fetch(`${url}/drinks`);
+    const outcome = await fetch(`${url}/drinks`, data);
     if(outcome.ok){
       const drinks = await outcome.json();
       res.status(200).json(drinks);
@@ -88,13 +88,13 @@ route.get('/drinks', urlencodedParser, async (req, res)=>{
   }
 });
 
-route.get('/friends', urlencodedParser, async (req, res)=>{
+route.get('/friends', urlencodedParser, checkAuthenticated, async (req, res)=>{
   try {
     const token = req.headers['authorization'].split(' ')[1];
     data['method'] = 'GET';
     data['headers']['authorization'] = token;
 
-    const outcome = await fetch(`${url}/friends`);
+    const outcome = await fetch(`${url}/friends`, data);
     if(outcome.ok){
       const friends = await outcome.json();
       res.status(200).json(friends);
@@ -107,7 +107,7 @@ route.get('/friends', urlencodedParser, async (req, res)=>{
   }
 });
 
-route.get('/drink/top/:user', urlencodedParser, async (req, res)=>{
+route.get('/drink/top/:user', urlencodedParser, checkAuthenticated, async (req, res)=>{
   try {
     const user = req.params.user;
     const token = req.headers['authorization'].split(' ')[1];
@@ -128,7 +128,7 @@ route.get('/drink/top/:user', urlencodedParser, async (req, res)=>{
 });
 
 //Get drinks related to that user
-route.get('/drinks/:user', urlencodedParser, async (req, res)=>{
+route.get('/drinks/:user', urlencodedParser, checkAuthenticated, async (req, res)=>{
   try {
 
     const user = req.params.user;
@@ -137,7 +137,7 @@ route.get('/drinks/:user', urlencodedParser, async (req, res)=>{
     data['method'] = 'GET';
     data['headers']['authorization'] = token;
     // C# API
-    const outcome = await fetch(`${url}/drinks/${user}`);
+    const outcome = await fetch(`${url}/drinks/${user}`, data);
     if(outcome.ok){
       res.status(200).send('All good!');
     }else{
@@ -150,7 +150,7 @@ route.get('/drinks/:user', urlencodedParser, async (req, res)=>{
 });
 
 //Get friends of that user
-route.get('/friends/:user', urlencodedParser, async (req, res)=>{
+route.get('/friends/:user', urlencodedParser, checkAuthenticated, async (req, res)=>{
   try {
     const user = req.params.user;
     const token = req.headers['authorization'].split(' ')[1];
@@ -158,7 +158,7 @@ route.get('/friends/:user', urlencodedParser, async (req, res)=>{
     data['method'] = 'GET';
     data['headers']['authorization'] = token;
     // C# API
-    const outcome = await fetch(`${url}/friends/${user}`);
+    const outcome = await fetch(`${url}/friends/${user}`, data);
     if(outcome.ok){
       res.status(200).send('All good!');
     }else{
@@ -171,7 +171,7 @@ route.get('/friends/:user', urlencodedParser, async (req, res)=>{
 });
 
 //Get locations that the user has been to
-route.get('/locations/:user', urlencodedParser, async (req, res)=>{
+route.get('/locations/:user', urlencodedParser, checkAuthenticated, async (req, res)=>{
   try {
     const user = req.params.user;
     const token = req.headers['authorization'].split(' ')[1];
@@ -179,7 +179,7 @@ route.get('/locations/:user', urlencodedParser, async (req, res)=>{
     data['method'] = 'GET';
     data['headers']['authorization'] = token;
     // C# API
-    const outcome = await fetch(`${url}/locations/${user}`);
+    const outcome = await fetch(`${url}/locations/${user}`, data);
     if(outcome.ok){
       res.status(200).send('All good!');
     }else{
@@ -191,14 +191,14 @@ route.get('/locations/:user', urlencodedParser, async (req, res)=>{
   }
 });
 
-route.get('/locations', urlencodedParser, async (req, res)=>{
+route.get('/locations', urlencodedParser, checkAuthenticated, async (req, res)=>{
   try {
     const token = req.headers['authorization'].split(' ')[1];
 
     data['method'] = 'GET';
     data['headers']['authorization'] = token;
     // C# API
-    const outcome = await fetch(`${url}/locations`);
+    const outcome = await fetch(`${url}/locations`, data);
     if(outcome.ok){
       const locations = await outcome.json();
       res.status(200).json(locations);
@@ -211,7 +211,7 @@ route.get('/locations', urlencodedParser, async (req, res)=>{
   }
 });
 
-route.get('/location/top/:user', urlencodedParser, async (req, res)=>{
+route.get('/location/top/:user', urlencodedParser, checkAuthenticated, async (req, res)=>{
   try {
     const user = req.params.user;
     const token = req.headers['authorization'].split(' ')[1];
@@ -232,7 +232,7 @@ route.get('/location/top/:user', urlencodedParser, async (req, res)=>{
   }
 });
 
-route.get('/spend/:user', urlencodedParser, async (req, res)=>{
+route.get('/spend/:user', urlencodedParser, checkAuthenticated, async (req, res)=>{
   try {
     const user = req.params.user;
     const token = req.headers['authorization'].split(' ')[1];
@@ -253,7 +253,7 @@ route.get('/spend/:user', urlencodedParser, async (req, res)=>{
   }
 });
 
-route.get('/history/:user', urlencodedParser, async (req, res)=>{
+route.get('/history/:user', urlencodedParser, checkAuthenticated, async (req, res)=>{
   try {
     const user = req.params.user;
     const token = req.headers['authorization'].split(' ')[1];
@@ -261,7 +261,7 @@ route.get('/history/:user', urlencodedParser, async (req, res)=>{
     data['method'] = 'GET';
     data['headers']['authorization'] = token;
     // C# API
-    const outcome = await fetch(`${url}/location/${user}`);
+    const outcome = await fetch(`${url}/location/${user}`, data);
     
     if(outcome.ok){
       const history = await outcome.json();
@@ -275,7 +275,7 @@ route.get('/history/:user', urlencodedParser, async (req, res)=>{
   }
 });
 
-route.get('/user', (req, res)=>{
+route.get('/user', checkAuthenticated, (req, res)=>{
   if(req.isAuthenticated()){
     res.status(200).send({
       id: req.user.id,
@@ -286,5 +286,13 @@ route.get('/user', (req, res)=>{
     res.status(400).send('Invalid Request');
   }
 });
+
+function checkAuthenticated(req, res, next) {
+  if (req.isAuthenticated()) {
+    next();
+  }else{
+    res.status(400).send('Invalid Request');
+  }
+}
 
 module.exports = route;

@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Server.Auth;
 using Server.Models;
 using Server.Models.RequestObjects;
 using Server.Service;
@@ -18,6 +19,7 @@ namespace Server.Controllers
         }
 
         [HttpGet("{id}")]
+        [CustomAuth]
         public IActionResult GetUserById(string id)
         {
             User? user = _userService.GetUserByEmail(id);
@@ -26,6 +28,7 @@ namespace Server.Controllers
         }
 
         [HttpPost]
+        [CustomAuth]
         public IActionResult PostUser(User user)
         {
             if (user == null || user.Name == null || user.Id == null)
@@ -36,30 +39,35 @@ namespace Server.Controllers
         }
 
         [HttpGet("{id}/friends")]
+        [CustomAuth]
         public IEnumerable<User> GetFriends(string id)
         {
             return _userService.GetUsersFriends(id);
         }
 
         [HttpPost("{userId}/friends")]
+        [CustomAuth]
         public IActionResult PostFriend(string userId, FriendRequestObject friend)
         {
             return _userService.CreateFriend(userId, friend) ? new EmptyResult() : BadRequest();
         }
 
         [HttpGet("{id}/logs")]
+        [CustomAuth]
         public IActionResult GetUserLogs(string id)
         {
             return new JsonResult(_userService.GetUserLogs(id));
         }
 
         [HttpPost("{id}/logs")]
+        [CustomAuth]
         public IActionResult LogDrinks(string id, LogEntry log)
         {
             return _userService.CreateLog(id, log) ? new EmptyResult() : BadRequest();
         }
 
         [HttpGet("{id}/logs/top")]
+        [CustomAuth]
         public IActionResult GetTopDrink(string id)
         {
             TopInformation information = _userService.GetTopInformation(id);

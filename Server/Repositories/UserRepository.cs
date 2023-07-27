@@ -20,7 +20,13 @@ namespace Server.Repositories
         public bool CreateUser(User user)
         {
             _dataContext.Users.Add(user);
-            return _dataContext.SaveChanges() == 1;
+            try
+            {
+                return _dataContext.SaveChanges() == 1;
+            } catch (Exception ex)
+            {
+                return false;
+            }
         }
 
     }

@@ -34,7 +34,7 @@ namespace Server.Service
             return _userRepository.GetUserById(email);
         }
 
-        public IEnumerable<User> GetUsersFriends(string userEmail)
+        public IEnumerable<User?> GetUsersFriends(string userEmail)
         {
             return _friendRepository.GetFriendsForUser(userEmail).Select(friend => friend.Friend).Where(user => user != null);
         }
@@ -63,7 +63,6 @@ namespace Server.Service
             IEnumerable<Log> userLogs = _logRepository.GetLogsForUser(userEmail);
             if (userLogs.IsNullOrEmpty())
             {
-                Console.WriteLine("WE ARE HERE");
                 return new TopInformation();
             }
             return new TopInformation(GetTopDrink(userLogs), GetTopLocation(userLogs), GetMoneySpent(userLogs));
