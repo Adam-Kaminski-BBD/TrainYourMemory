@@ -1,12 +1,18 @@
 import * as Fn from './navbar.js';
-document.addEventListener('DOMContentLoaded',()=>{
+document.addEventListener('DOMContentLoaded',async ()=>{
+  const userCheck = await fetch('/api/user');
+  const userInfo = await userCheck.json();
+  
+  const name = userInfo.name;
+  const token = userInfo.token;
+  const id = userInfo.id;
   isVerified();
-  populateHistory();
-  menuSetup();
+  populateDrinks(token, id);
+  menuSetup(name);
 });
 
-function menuSetup(){
-  const navbarElement = Fn.renderNavbar();
+function menuSetup(name){
+  const navbarElement = Fn.renderNavbar(name);
   const main = document.getElementsByTagName('main')[0];
   const body = document.getElementsByTagName('body')[0];
   body.insertBefore(navbarElement, main);
@@ -16,10 +22,16 @@ function isVerified(){
   console.log('You got tokens bro?');
 }
 
-async function populateHistory(){
+async function populateDrinks(token, id){
   try {
-    const user = 'john@doe.com';
-    const response = await fetch(`/api/drinks/${user}`);
+    const data = {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + token
+      },
+    };
+    const response = await fetch(`/api/drinks/${id}`, data);
     let drinks = [];
     if(response.ok){
       drinks = await response.json();

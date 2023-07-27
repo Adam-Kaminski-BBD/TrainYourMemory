@@ -28,13 +28,17 @@ const tabs = [
   {
     label: 'FaQ',
     onclick: showFaQ 
+  },
+  {
+    label: 'Logout',
+    onclick: logout
   }
 ];
 
 
-export function renderNavbar() {
+export function renderNavbar(user) {
   //I'll get the ude from local/sessional storage or wherever else they store it
-  const name = 'Thabang';
+  const name = user;
   const navbarElement = document.createElement('div');
   navbarElement.className = 'nav-bar';
   
@@ -89,7 +93,27 @@ export function showFaQ() {
   window.location.href = '/FAQ';
 }
 export function showHome() {
-  window.location.href = '/dashboard';
+  window.location.href = '/home';
+}
+
+export function logout() {
+  // Perform the logout action
+  fetch('/logout', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  })
+    .then(response => response.json())
+    .then(data => {
+      // Redirect the user to the login page after successful logout
+      if (data.success) {
+        window.location.href = '/home';
+      }
+    })
+    .catch(error => {
+      console.error('Logout error:', error);
+    });
 }
 
 

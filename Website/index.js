@@ -19,6 +19,9 @@ app.use(session({
   secret: 'your-secret-key-here',
   resave: false,
   saveUninitialized: false,
+  cookie: {
+    maxAge: 60 * 60 * 1000, // Makes the cookie valid for an hour in milliseconds
+  }
 }));
 
 app.use(passport.initialize());
@@ -30,6 +33,7 @@ passport.use(new GoogleStrategy({
   callbackURL: '/dashboard', 
 },
 (accessToken, refreshToken, profile, done) => {
+  profile['token'] = accessToken;
   done(null, profile);
 }));
 
@@ -42,14 +46,6 @@ passport.deserializeUser((user, done) => {
   // Example: User.findById(id, (err, user) => done(err, user));
   done(null, user);
 });
-
-// function isUserAuthenticated(req, res, next) {
-//   if (req.user) {
-//     next();
-//   } else {
-//     res.send('You must login!');
-//   }
-// }
 
 const dir = path.join(__dirname, './public/Views');
 // Static files
@@ -150,9 +146,31 @@ app.get('/auth/google', passport.authenticate('google', {
 //   res.redirect('/dashboard');
 // });
 
-app.get('/logout', (req, res) => {
-  req.logOut();
-  res.redirect('/');
+// Route to handle logout and invalidate the session
+app.post('/logout', (req, res) => {
+  if (req.session) {
+    // Destroy the session and remove the session data
+    req.session.destroy(err => {
+      if (err) {
+        console.error('Error while destroying the session:', err);
+        res.json({
+          success: false,
+          message: 'Logout failed.' 
+        });
+      } else {
+        res.json({
+          success: true,
+          message: 'Logout successful.' 
+        });
+      }
+    });
+  } else {
+    // Session doesn't exist, consider it as a successful logout
+    res.json({
+      success: true,
+      message: 'Logout successful.' 
+    });
+  }
 });
 
 app.listen(process.env.PORT, ()=>{

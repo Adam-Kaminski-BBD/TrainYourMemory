@@ -1,14 +1,19 @@
 import * as Fn from './navbar.js';
 
-document.addEventListener('DOMContentLoaded',()=>{
-  menuSetup();
+document.addEventListener('DOMContentLoaded',async ()=>{
+  const userCheck = await fetch('/api/user');
+  const userInfo = await userCheck.json();
+  
+  const name = userInfo.name;
+  const token = userInfo.token;
+  menuSetup(name);
   setupForm();
-  drinkSetup();
-  locationSetup();
+  drinkSetup(token);
+  locationSetup(token);
 });
 
-function menuSetup(){
-  const navbarElement = Fn.renderNavbar();
+function menuSetup(name){
+  const navbarElement = Fn.renderNavbar(name);
   const main = document.getElementsByTagName('main')[0];
   const body = document.getElementsByTagName('body')[0];
   body.insertBefore(navbarElement, main);
@@ -66,9 +71,16 @@ function submit(e){
   console.log(formDataObject);
 }
 
-async function drinkSetup(){
+async function drinkSetup(token){
   try {
-    const response = await fetch('/api/drinks');
+    const data = {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + token
+      },
+    };
+    const response = await fetch('/api/drinks', data);
     let drinks = [];
     if(response.ok){
       drinks = await response.json();
@@ -86,9 +98,16 @@ async function drinkSetup(){
     alert(error);
   }
 }
-async function locationSetup(){
+async function locationSetup(token){
   try {
-    const response = await fetch('/api/locations');
+    const data = {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + token
+      },
+    };
+    const response = await fetch('/api/locations', data);
     let drinks = [];
     if(response.ok){
       drinks = await response.json();

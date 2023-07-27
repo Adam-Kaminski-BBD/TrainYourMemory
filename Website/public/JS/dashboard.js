@@ -9,8 +9,12 @@ document.addEventListener('DOMContentLoaded',()=>{
   populateUser();
 });
 
-function menuSetup(){
-  const navbarElement = Fn.renderNavbar();
+async function menuSetup(){
+  const userCheck = await fetch('/api/user');
+  const userInfo = await userCheck.json();
+
+  const user = userInfo.name;
+  const navbarElement = Fn.renderNavbar(user);
   const main = document.getElementsByTagName('main')[0];
   const body = document.getElementsByTagName('body')[0];
   body.insertBefore(navbarElement, main);
@@ -19,15 +23,32 @@ function menuSetup(){
 //Use the above document.addEventListener to call functions like the menuSetup to populate the screen, cleans things up
 
 //I'll get the ude from local/sessional storage or wherever else they store it
-function populateUser(){
-  const name = 'Thabang';
+async function populateUser(){
+  const userCheck = await fetch('/api/user');
+  const userInfo = await userCheck.json();
+
+  const user = userInfo.name;
+
+  const name = user;
   const greeting = document.getElementById('h1');
   greeting.textContent = `Hey ${name}, what did you have this time?`;
 }
 
 async function populateHistory(){
   try {
-    const response = await fetch('/api/locations/');
+    const userCheck = await fetch('/api/user');
+    const userInfo = await userCheck.json();
+
+    const user = userInfo.id;
+    const token = userInfo.token;
+    const data = {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + token
+      },
+    };
+    const response = await fetch(`/api/history/${user}`, data);
     let locations = [];
     if(response.ok){
       locations = await response.json();
@@ -47,8 +68,20 @@ async function populateHistory(){
 
 async function populateTopDrink(){
   try {
-    const user = 'john@doe.com';
-    const response = await fetch(`/api/drink/top/${user}`);
+
+    const userCheck = await fetch('/api/user');
+    const userInfo = await userCheck.json();
+
+    const user = userInfo.id;
+    const token = userInfo.token;
+    const data = {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + token
+      },
+    };
+    const response = await fetch(`/api/drink/top/${user}`, data);
     if(response.ok){
       const drink = document.getElementById('drink');
       drink.textContent = response.drink;    }
@@ -59,8 +92,19 @@ async function populateTopDrink(){
 
 async function populateTopLocation(){
   try {
-    const user = 'john@doe.com';
-    const response = await fetch(`/api/location/top/${user}`);
+    const userCheck = await fetch('/api/user');
+    const userInfo = await userCheck.json();
+
+    const user = userInfo.id;
+    const token = userInfo.token;
+    const data = {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + token
+      },
+    };
+    const response = await fetch(`/api/location/top/${user}`, data);
     if(response.ok){
       const bar = document.getElementById('bar');
       bar.textContent = response.location;
@@ -70,11 +114,21 @@ async function populateTopLocation(){
   }
 }
 
-
 async function populateSpending(){
   try {
-    const user = 'john@doe.com';
-    const response = await fetch(`/api/spend/${user}`);
+    const userCheck = await fetch('/api/user');
+    const userInfo = await userCheck.json();
+
+    const user = userInfo.id;
+    const token = userInfo.token;
+    const data = {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + token
+      },
+    };
+    const response = await fetch(`/api/spend/${user}`, data);
     if(response.ok){
       const spend = document.getElementById('spend');
       spend.textContent =  `R${response.amount}`;

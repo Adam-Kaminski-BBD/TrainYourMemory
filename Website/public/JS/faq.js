@@ -1,11 +1,16 @@
 import * as Fn from './navbar.js';
-document.addEventListener('DOMContentLoaded',()=>{
-  menuSetup();
+document.addEventListener('DOMContentLoaded',async ()=>{
+  const userCheck = await fetch('/api/user');
+  const userInfo = await userCheck.json();
+  
+  const name = userInfo.name;
+
+  menuSetup(name);
   clickerSetup();
 });
 
-function menuSetup(){
-  const navbarElement = Fn.renderNavbar();
+function menuSetup(name){
+  const navbarElement = Fn.renderNavbar(name);
   const main = document.getElementsByTagName('main')[0];
   const body = document.getElementsByTagName('body')[0];
   body.insertBefore(navbarElement, main);
