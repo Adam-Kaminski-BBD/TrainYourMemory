@@ -146,9 +146,31 @@ app.get('/auth/google', passport.authenticate('google', {
 //   res.redirect('/dashboard');
 // });
 
-app.get('/logout', (req, res) => {
-  req.logOut();
-  res.redirect('/');
+// Route to handle logout and invalidate the session
+app.post('/logout', (req, res) => {
+  if (req.session) {
+    // Destroy the session and remove the session data
+    req.session.destroy(err => {
+      if (err) {
+        console.error('Error while destroying the session:', err);
+        res.json({
+          success: false,
+          message: 'Logout failed.' 
+        });
+      } else {
+        res.json({
+          success: true,
+          message: 'Logout successful.' 
+        });
+      }
+    });
+  } else {
+    // Session doesn't exist, consider it as a successful logout
+    res.json({
+      success: true,
+      message: 'Logout successful.' 
+    });
+  }
 });
 
 app.listen(process.env.PORT, ()=>{
