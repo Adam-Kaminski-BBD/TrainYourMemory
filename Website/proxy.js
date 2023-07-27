@@ -7,18 +7,22 @@ const route = express.Router();
 route.use(bodyParser.json());
 
 // Parse URL-encoded data
-route.use(bodyParser.urlencoded({ extended: true }));
+route.use(bodyParser.urlencoded({
+  extended: true 
+}));
 
 // C# API server
 const url = 'http://localhost:8080';
-let data = {
+const data = {
   method: 'POST',
   headers: {
     'Content-Type': 'application/json',
   },
 };
 
-let urlencodedParser = bodyParser.urlencoded({ extended: false });
+const urlencodedParser = bodyParser.urlencoded({
+  extended: false 
+});
 
 route.post('/entry', urlencodedParser, async (req, res)=>{
   try {
@@ -80,11 +84,84 @@ route.get('/drinks', urlencodedParser, async (req, res)=>{
   }
 });
 
+//just in case we need it somewhere
+route.get('/friends', urlencodedParser, async (req, res)=>{
+  const dummy = [
+    'Johny Walker',
+    'Jack Sparrow',
+    'Jamie Jameson',
+    'Paul Klipdrift',
+  ];
+  try {
+    const outcome = await fetch(`${url}/friends`);
+    if(outcome.ok){
+      const friends = await outcome.json();
+      res.status(200).json(friends);
+    }else{
+      throw outcome;
+    }
+
+  } catch (error) {
+    res.status(200).json(dummy);
+  }
+});
+
 route.get('/drink/top/:user', urlencodedParser, async (req, res)=>{
   try {
     const user = req.params.user;
     // C# API
     const outcome = await fetch(`${url}/entry/${user}`);
+    if(outcome.ok){
+      res.status(200).send('All good!');
+    }else{
+      throw outcome;
+    }
+
+  } catch (error) {
+    res.status(400).send('Invalid request');
+  }
+});
+
+//Get drinks related to that user
+route.get('/drinks/:user', urlencodedParser, async (req, res)=>{
+  try {
+    const user = req.params.user;
+    // C# API
+    const outcome = await fetch(`${url}/drinks/${user}`);
+    if(outcome.ok){
+      res.status(200).send('All good!');
+    }else{
+      throw outcome;
+    }
+
+  } catch (error) {
+    res.status(400).send('Invalid request');
+  }
+});
+
+//Get friends of that user
+route.get('/friends/:user', urlencodedParser, async (req, res)=>{
+  try {
+    const user = req.params.user;
+    // C# API
+    const outcome = await fetch(`${url}/friends/${user}`);
+    if(outcome.ok){
+      res.status(200).send('All good!');
+    }else{
+      throw outcome;
+    }
+
+  } catch (error) {
+    res.status(400).send('Invalid request');
+  }
+});
+
+//Get locations that the user has been to
+route.get('/locations/:user', urlencodedParser, async (req, res)=>{
+  try {
+    const user = req.params.user;
+    // C# API
+    const outcome = await fetch(`${url}/locations/${user}`);
     if(outcome.ok){
       res.status(200).send('All good!');
     }else{
