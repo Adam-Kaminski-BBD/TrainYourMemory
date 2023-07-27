@@ -3,7 +3,11 @@ const fs = require('fs');
 const path = require('path');
 const { log } = require('./Tools/Logger');
 const proxy = require('./proxy');
+const passport = require('passport');
+const GoogleStrategy = require('passport-google-oauth20');
+const cookieSession = require('cookie-session');
 const cors = require('cors');
+
 require('dotenv').config();
 
 const app = express();
@@ -11,6 +15,40 @@ const app = express();
 
 // Enable CORS for all routes
 app.use(cors());
+
+app.use(cookieSession({
+  maxAge: 24 * 60 * 1000,
+  keys: ['randomstringhere']
+}));
+
+app.use(passport.initialize());
+app.use(passport.session());
+
+passport.use(new GoogleStrategy({
+  clientID: '854819648821-mjv3cikjpfato9nrmti9363892tb4cvg.apps.googleusercontent.com',
+  clientSecret: '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',
+  callbackURL: 'http://localhost:8080/dashboard'
+},
+(accessToken, refreshToken, profile, done) => {
+  done(null, profile);
+}
+));
+
+passport.serializeUser((user, done) => {
+  done(null, user);
+});
+
+passport.deserializeUser((user, done) => {
+  done(null, user);
+});
+
+function isUserAuthenticated(req, res, next) {
+  if (req.user) {
+    next();
+  } else {
+    res.send('You must login!');
+  }
+}
 
 const dir = path.join(__dirname, './public/Views');
 // Static files
@@ -64,6 +102,23 @@ app.get('/entry', (req, res)=>{
 app.get('/FAQ', (req, res)=>{
   // list of the homies
   res.sendFile(path.join(dir, './FAQ.html'));
+});
+
+app.get('/auth/google', passport.authenticate('google', {
+  scope: ['profile']
+}));
+
+app.get('/auth/google/callback', passport.authenticate('google'), (req, res) => {
+  res.redirect('/secret');
+});
+
+app.get('/secret', isUserAuthenticated, (req, res) => {
+  res.send('You have reached the secret route');
+});
+
+app.get('/logout', (req, res) => {
+  req.logOut();
+  res.redirect('/');
 });
 
 app.listen(process.env.PORT, ()=>{
